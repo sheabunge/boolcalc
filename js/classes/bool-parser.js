@@ -15,30 +15,11 @@ export class BooleanParser extends Parser {
 	/**
 	 * @constructor
 	 * @param {string} tokens
-	 * @param {Map} vars
 	 */
-	constructor(tokens, vars) {
+	constructor(tokens) {
 		tokens = tokens.replace(/\s+/g, '');
 		super(tokens);
-		this.vars = vars || new Map();
-	}
-
-	/**
-	 * Retrieve the value of a variable
-	 * @param {string} var_name
-	 * @returns {boolean|null}
-	 */
-	get_var(var_name) {
-
-		if (this.vars.has(var_name)) {
-			return this.vars.get(var_name);
-		}
-
-		if (var_name === '0' || var_name === '1') {
-			return '0' !== var_name;
-		}
-
-		return null;
+		this.vars = [];
 	}
 
 	/**
@@ -60,8 +41,14 @@ export class BooleanParser extends Parser {
 			if (this.peek() !== ')') {
 				throw new Error('Closing parenthesis not found');
 			}
-		} else if (this.get_var(this.peek()) !== null) {
-			node = new BoolNode(this.get_var(this.peek()));
+
+			this.next();
+
+		} else if (this.peek().match(/[01A-Z]/)) {
+			let var_name = this.peek();
+			node = new BoolNode(var_name);
+
+			this.vars.push(node);
 			this.next();
 		}
 

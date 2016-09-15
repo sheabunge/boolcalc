@@ -8,16 +8,29 @@ export class BoolNode extends Node {
 
 	/**
 	 * @constructor
-	 * @param {boolean} value the value of the node
+	 * @param {string} label Node label
 	 */
-	constructor(value) {
+	constructor(label) {
 		super(null, null);
+		this.label = label;
+		this._value = null;
 
-		if (typeof(value) !== 'boolean') {
+		if (label === '0' || label === '1') {
+			this.value = '0' !== label;
+		}
+	}
+
+	set value(value) {
+
+		if (value != null && typeof(value) !== 'boolean') {
 			throw new TypeError('Node value must be boolean');
 		}
 
-		this.value = value;
+		this._value = value;
+	}
+
+	get value() {
+		return this._value;
 	}
 
 	/**
@@ -26,6 +39,10 @@ export class BoolNode extends Node {
 	 */
 	eval() {
 		return this.value;
+	}
+
+	toString() {
+		return this.label + '(' + this.value + ')';
 	}
 }
 
@@ -41,6 +58,10 @@ export class AndNode extends Node {
 	eval() {
 		return this.left.eval() && this.right.eval();
 	}
+
+	toString() {
+		return this.left.toString() + ' ^ ' + this.right.toString();
+	}
 }
 
 /**
@@ -54,5 +75,9 @@ export class OrNode extends Node {
 	 */
 	eval() {
 		return this.left.eval() || this.right.eval();
+	}
+
+	toString() {
+		return this.left.toString() + ' v ' + this.right.toString();
 	}
 }

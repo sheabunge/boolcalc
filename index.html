@@ -11,11 +11,12 @@
 
 <main ng-controller="Parser">
 
-    <form class="input">
-        <p>
-            <input ng-model="exp" type="text">
-        </p>
+    <form ng-submit="parse()">
+	    <input ng-model="exp" type="text">
+	    <input type="submit" value="Parse">
     </form>
+
+	<div class="output">{{ output }}</div>
 
 </main>
 

@@ -35,6 +35,8 @@ export class Parser {
 		let node = this._parse();
 
 		if (! this.end()) {
+			console.log(this.tokens);
+			console.log(this.current);
 			throw new Error('extra content found at end of input');
 		}
 

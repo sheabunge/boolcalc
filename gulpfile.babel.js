@@ -58,9 +58,16 @@ gulp.task('test-js', () => {
 
 gulp.task('js', ['test-js'], () => {
 
-	return browserify({ entries: 'js/app.js', debug: true })
-		.transform('babelify', { presets: ['es2015'], sourceMaps: true })
-		.bundle()
+	const b = browserify({
+		debug: true,
+		entries: 'js/app.js'
+	});
+
+	b.transform('babelify', {
+		presets: ['es2015'], sourceMaps: true
+	});
+
+	return b.bundle()
 		.pipe(source('app.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init())

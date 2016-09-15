@@ -1,6 +1,7 @@
 
 import {Parser} from './parser.js';
-import {BoolNode, AndNode, OrNode} from './bool-nodes.js';
+import {AndNode, OrNode} from './nodes.js';
+import {VariableNode, TrueNode, FalseNode} from './bool-nodes.js';
 
 /**
  * Parses a boolean expression
@@ -46,9 +47,16 @@ export class BooleanParser extends Parser {
 
 		} else if (this.peek().match(/[01A-Z]/)) {
 			let var_name = this.peek();
-			node = new BoolNode(var_name);
 
-			this.vars.push(node);
+			if (var_name === '1') {
+				node = new TrueNode();
+			} else if (var_name === '0') {
+				node = new FalseNode();
+			} else {
+				node = new VariableNode(var_name);
+				this.vars.push(node);
+			}
+
 			this.next();
 		}
 

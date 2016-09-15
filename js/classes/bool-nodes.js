@@ -1,34 +1,39 @@
 
-import {Node} from './node.js';
+import {Node} from './nodes.js';
 
 /**
- * Represents a boolean value
+ * Represents a variable boolean value
  */
-export class BoolNode extends Node {
+export class VariableNode extends Node {
 
 	/**
 	 * @constructor
 	 * @param {string} label Node label
+	 * @param {boolean|null} value Value of the node
 	 */
-	constructor(label) {
+	constructor(label, value) {
 		super(null, null);
 		this.label = label;
-		this._value = null;
-
-		if (label === '0' || label === '1') {
-			this.value = '0' !== label;
-		}
+		this.value = value || null;
 	}
 
+	/**
+	 * Set the value property
+	 * @param {boolean|null} value
+	 */
 	set value(value) {
 
-		if (value !== null && typeof(value) !== 'boolean') {
-			throw new TypeError('Node value must be boolean');
+		if (typeof(value) !== 'boolean') {
+			value = null;
 		}
 
 		this._value = value;
 	}
 
+	/**
+	 * Retrieve the node's value
+	 * @returns {boolean|null}
+	 */
 	get value() {
 		return this._value;
 	}
@@ -38,46 +43,77 @@ export class BoolNode extends Node {
 	 * @returns {boolean} Value of the node
 	 */
 	eval() {
+		if (this.value === null) {
+			console.log(this.value);
+			throw new Error('Variable node cannot be null')
+		}
+
 		return this.value;
 	}
 
+	/**
+	 * Retrieve a string representation of the node
+	 * @returns {string}
+	 */
 	toString() {
 		return this.label + '(' + this.value + ')';
 	}
 }
 
 /**
- * Represents an "and" node
+ * Node representing a true boolean value
  */
-export class AndNode extends Node {
+export class TrueNode extends Node {
+
+	/**
+	 * @constructor
+	 */
+	constructor() {
+		super(null, null);
+	}
 
 	/**
 	 * Evaluate the node
-	 * @returns {boolean} The result of (L ^ R)
+	 * @returns {boolean}
 	 */
 	eval() {
-		return this.left.eval() && this.right.eval();
+		return true;
 	}
 
+	/**
+	 * Retrieve a string representation of the node
+	 * @returns {string}
+	 */
 	toString() {
-		return this.left.toString() + ' ^ ' + this.right.toString();
+		return '1';
 	}
 }
 
 /**
- * Represents an "or" node
+ * Node representing a false boolean value
  */
-export class OrNode extends Node {
+export class FalseNode extends Node {
 
 	/**
-	 * Evaluates the node
-	 * @returns {boolean} The result of (L v R)
+	 * @constructor
 	 */
-	eval() {
-		return this.left.eval() || this.right.eval();
+	constructor() {
+		super(null, null);
 	}
 
+	/**
+	 * Evaluate the node
+	 * @returns {boolean}
+	 */
+	eval() {
+		return false;
+	}
+
+	/**
+	 * Retrieve a string representation of the node
+	 * @returns {string}
+	 */
 	toString() {
-		return this.left.toString() + ' v ' + this.right.toString();
+		return '0';
 	}
 }

@@ -21,15 +21,28 @@ label {
 	height: 50px;
 	line-height: 3rem;
 	text-align: center;
+	font-size: 2rem;
 }
 
-th {
+button {
+	margin: 1.5em auto;
+}
+
+th, td {
 	text-align: center;
+}
+
+.value-true {
+	background: #dff0d8; /* #d9edf7 */
+}
+
+.value-false {
+	background: #f2dede;
 }
 
 form {
 	max-width: 300px;
-	margin: 0 auto 3em;
+	margin: 0 auto 2em;
 }
 
 .header, .footer {

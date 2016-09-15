@@ -27,7 +27,7 @@
 					<input ng-model="exp" type="text" id="exp" class="form-control">
 				</div>
 
-				<button type="submit" class="btn btn-default btn-block btn-lg">Parse</button>
+				<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
 
 			</form>
 
@@ -38,6 +38,9 @@
 					<th>result</th>
 				</tr>
 				</thead>
+				<tr ng-repeat="row in table">
+					<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' ? 'true' : 'false' }}">{{ cell }}</td>
+				</tr>
 			</table>
 
 		</main>

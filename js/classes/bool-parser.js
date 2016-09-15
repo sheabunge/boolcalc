@@ -15,11 +15,13 @@ export class BooleanParser extends Parser {
 
 	/**
 	 * @constructor
-	 * @param {string} tokens
+	 * @param {string} exp
 	 */
-	constructor(tokens) {
-		tokens = tokens.replace(/\s+/g, '');
+	constructor(exp) {
+
+		let tokens = exp.match(/[A-Za-z_]\w*|[v^~01()]/g);
 		super(tokens);
+
 		this.vars = [];
 	}
 
@@ -45,7 +47,7 @@ export class BooleanParser extends Parser {
 
 			this.next();
 
-		} else if (this.peek().match(/[01A-Z]/)) {
+		} else if (this.peek().match(/[A-Za-z_]\w*|[01]/)) {
 			let var_name = this.peek();
 
 			if (var_name === '1') {

@@ -24,7 +24,6 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.table = [];
 
 	$scope.parse = () => {
-
 		$scope.parser = new BooleanParser($scope.exp);
 
 		$scope.tree = $scope.parser.parse();

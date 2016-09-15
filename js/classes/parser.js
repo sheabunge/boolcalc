@@ -45,17 +45,3 @@ export class Parser {
 		throw new TypeError('_parse() method not implemented');
 	}
 }
-
-
-export class Node {
-
-	constructor(left, right) {
-		this.left = left;
-		this.right = right;
-	}
-
-	eval() {
-		throw TypeError('eval() method not implemented');
-	}
-}
-

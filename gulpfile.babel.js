@@ -1,4 +1,3 @@
-'use strict';
 
 import gulp from 'gulp';
 import run from 'run-sequence';

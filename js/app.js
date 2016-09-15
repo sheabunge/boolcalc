@@ -1,6 +1,5 @@
-'use strict';
 
-import {BooleanParser} from './boolparser.js';
+import {BooleanParser} from './classes/bool-parser.js';
 import angular from 'angular';
 
 /**
@@ -17,6 +16,8 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.exp = '';
 
 	$scope.$watch(function () {
+
+		let parser = new BooleanParser($scope.exp, new Map());
 
 	});
 }]);

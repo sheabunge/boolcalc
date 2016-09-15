@@ -14,7 +14,9 @@
   },
   "main": "gulpfile.babel.js",
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
@@ -25,6 +27,7 @@
     "cssnano": "^3.7.4",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-eslint": "^3.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-postcss": "^6.2.0",
     "gulp-sourcemaps": "^1.6.0",

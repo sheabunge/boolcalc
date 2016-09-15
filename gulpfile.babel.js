@@ -1,21 +1,21 @@
 'use strict';
 
-let gulp = require('gulp');
-let sequence = require('run-sequence');
-let livereload = require('gulp-livereload');
-let sourcemaps = require('gulp-sourcemaps');
-let clean = require('gulp-clean');
+import gulp from 'gulp';
+import run from 'run-sequence';
+import livereload from 'gulp-livereload';
+import sourcemaps from 'gulp-sourcemaps';
+import clean from 'gulp-clean';
 
-let postcss = require('gulp-postcss');
-let precss = require('precss');
-let autoprefixer = require('autoprefixer');
-let cssnano = require('cssnano');
+import postcss from 'gulp-postcss';
+import precss from 'precss';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
 
-let browserify = require('browserify');
-let babelify = require('babelify');
-let source = require('vinyl-source-stream');
-let buffer = require('vinyl-buffer');
-let uglify = require('gulp-uglify');
+import browserify from 'browserify';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import uglify from 'gulp-uglify';
 
 const dest = 'dist';
 
@@ -61,5 +61,5 @@ gulp.task('clean', () => {
 });
 
 gulp.task('default', () => {
-    sequence('clean', ['css', 'js'])
+    run('clean', ['css', 'js'])
 });

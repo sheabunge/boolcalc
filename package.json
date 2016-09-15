@@ -13,6 +13,9 @@
     "url": "https://github.com/sheabunge/boolparser/issues"
   },
   "main": "gulpfile.babel.js",
+  "babel": {
+    "presets": ["es2015"]
+  },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
     "babel-core": "^6.14.0",

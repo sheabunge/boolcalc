@@ -22,7 +22,7 @@ export class BoolNode extends Node {
 
 	set value(value) {
 
-		if (value != null && typeof(value) !== 'boolean') {
+		if (value !== null && typeof(value) !== 'boolean') {
 			throw new TypeError('Node value must be boolean');
 		}
 

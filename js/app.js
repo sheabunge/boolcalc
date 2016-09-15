@@ -15,19 +15,12 @@ let app = angular.module('app', []);
 app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.exp = '';
 
-
 	$scope.parse = () => {
 
-		let parser = new BooleanParser($scope.exp);
+		$scope.parser = new BooleanParser($scope.exp);
 
-		let tree = parser.parse();
+		$scope.tree = $scope.parser.parse();
 
 		$scope.output = tree.toString();
 	};
 }]);
-
-
-let parse = function (exp, args) {
-	let parser = new BooleanParser(exp, args);
-	return parser.parse().eval();
-};

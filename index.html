@@ -2,23 +2,49 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Boolean Expression Parser</title>
+
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-	<link rel="stylesheet" href="dist/app.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	<link rel="stylesheet" href="dist/app.css">
+
 	<script src="dist/app.js"></script>
 </head>
 <body ng-app="app">
+	<div class="container">
 
-<main ng-controller="Parser">
+		<div class="header clearfix">
+			<h3 class="text-muted">Boolean Expression Parser</h3>
+		</div>
 
-    <form ng-submit="parse()">
-	    <input ng-model="exp" type="text">
-	    <input type="submit" value="Parse">
-    </form>
+		<main ng-controller="Parser">
+			<form ng-submit="parse()">
 
-	<div class="output">{{ output }}</div>
+				<div class="form-group">
+					<label for="exp">Expression</label>
+					<input ng-model="exp" type="text" id="exp" class="form-control">
+				</div>
 
-</main>
+				<button type="submit" class="btn btn-default btn-block btn-lg">Parse</button>
 
+			</form>
+
+			<table class="table table-hover table-bordered truth-table"  ng-if="parser">
+				<thead>
+				<tr>
+					<th ng-repeat="var in parser.vars">{{ var.label }}</th>
+					<th>result</th>
+				</tr>
+				</thead>
+			</table>
+
+		</main>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; Shea Bunge, 2016</p>
+	</footer>
 </body>
 </html>

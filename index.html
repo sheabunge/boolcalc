@@ -33,7 +33,7 @@
 			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
 				<thead>
 				<tr>
-					<th ng-repeat="var in parser.get_vars()">{{ '' + var }}</th>
+					<th ng-repeat="var in parser.get_vars()" class="variable">{{ '' + var }}</th>
 					<th ng-repeat="node in nodes">{{ '' + node }}</th>
 				</tr>
 				</thead>

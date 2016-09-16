@@ -1,4 +1,9 @@
 
+$pale-yellow-bg: #fcf8e3;
+$pale-red-bg: #f2dede;
+$pale-green-bg: #dff0d8;
+$pale-blue-bg: #d9edf7;
+
 body {
 	background: #f1f1f1;
 	margin: 140px auto 25px;
@@ -32,12 +37,16 @@ th, td {
 	text-align: center;
 }
 
+th.variable, th:last-of-type {
+	background-color: $pale-yellow-bg;
+}
+
 .value-true {
-	background: #dff0d8; /* #d9edf7 */
+	background-color: $pale-green-bg;
 }
 
 .value-false {
-	background: #f2dede;
+	background-color: $pale-red-bg;
 }
 
 form {

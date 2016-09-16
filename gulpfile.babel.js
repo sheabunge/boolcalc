@@ -1,7 +1,6 @@
 
 import gulp from 'gulp';
 import run from 'run-sequence';
-import livereload from 'gulp-livereload';
 import sourcemaps from 'gulp-sourcemaps';
 import clean from 'gulp-clean';
 
@@ -17,6 +16,8 @@ import buffer from 'vinyl-buffer';
 import uglify from 'gulp-uglify';
 import eslint from 'gulp-eslint';
 
+let browsersync = require('browser-sync').create();
+
 const dest = 'dist';
 
 gulp.task('css', () => {
@@ -31,7 +32,7 @@ gulp.task('css', () => {
 		.pipe(postcss(processors))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
-		.pipe(livereload())
+		.pipe(browsersync.stream({ match: '**/*.css' }))
 });
 
 gulp.task('test-js', () => {
@@ -74,15 +75,24 @@ gulp.task('js', ['test-js'], () => {
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
-		.pipe(livereload())
+		.pipe(browsersync.stream({ match: '**/*.js' }))
 });
 
 gulp.task('watch', ['default'], () => {
-	livereload.listen();
-	gulp.watch('js/**/*.js', ['js']);
 	gulp.watch('css/**/*.css', ['css']);
+	gulp.watch('js/**/*.js', ['js']);
 });
 
+gulp.task('browsersync', ['watch'], () => {
+
+	browsersync.init({
+		server: {
+			baseDir: './'
+		}
+	});
+
+	gulp.watch('*.html').on('change', browsersync.reload);
+});
 
 gulp.task('clean', () => {
 	return gulp.src(dest, {read: false})

@@ -34,7 +34,7 @@
 			<table class="table table-hover table-bordered truth-table"  ng-if="parser">
 				<thead>
 				<tr>
-					<th ng-repeat="var in parser.vars">{{ var.label }}</th>
+					<th ng-repeat="var in parser.get_vars()">{{ var.label }}</th>
 					<th>result</th>
 				</tr>
 				</thead>

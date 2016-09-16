@@ -3,6 +3,7 @@ import {Parser} from './parser.js';
 import {AndNode, OrNode, NotNode} from './nodes.js';
 import {VariableNode, TrueNode, FalseNode} from './bool-nodes.js';
 
+
 /**
  * Parses a boolean expression
  *
@@ -22,7 +23,35 @@ export class BooleanParser extends Parser {
 		let tokens = exp.match(/[A-Za-z_]\w*|[v^~01()]/g);
 		super(tokens);
 
-		this.vars = [];
+		this._vars = [];
+	}
+
+	/**
+	 * Create a new variable node with a given label, if one
+	 * does not already exist
+	 * @param {string} label Label for the variable node
+	 * @returns {VariableNode} Either a newly-created or an existing variable node
+	 */
+	create_var(label) {
+		let node;
+
+		for (let v of this._vars) {
+			if (v.label === label) {
+				return v;
+			}
+		}
+
+		node = new VariableNode(label, null);
+		this._vars.push(node);
+		return node;
+	}
+
+	/**
+	 * Retrieve the list of variables
+	 * @returns {Array} list of variables used in the expression
+	 */
+	get_vars() {
+		return this._vars;
 	}
 
 	/**
@@ -48,15 +77,14 @@ export class BooleanParser extends Parser {
 			this.next();
 
 		} else if (this.peek().match(/[A-Za-z_]\w*|[01]/)) {
-			let var_name = this.peek();
+			let var_label = this.peek();
 
-			if (var_name === '1') {
+			if (var_label === '1') {
 				node = new TrueNode();
-			} else if (var_name === '0') {
+			} else if (var_label === '0') {
 				node = new FalseNode();
 			} else {
-				node = new VariableNode(var_name);
-				this.vars.push(node);
+				node = this.create_var(var_label);
 			}
 
 			this.next();

@@ -49,8 +49,7 @@ export class VariableNode extends Node {
 	 */
 	eval() {
 		if (this.value === null) {
-			console.log(this.value);
-			throw new Error('Variable node cannot be null')
+			throw new Error('Variable Node "' + this.label + '" cannot be null')
 		}
 
 		return this.value;

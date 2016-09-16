@@ -1,13 +1,13 @@
 
 import {Parser} from './parser.js';
-import {AndNode, OrNode} from './nodes.js';
+import {AndNode, OrNode, NotNode} from './nodes.js';
 import {VariableNode, TrueNode, FalseNode} from './bool-nodes.js';
 
 /**
  * Parses a boolean expression
  *
  * <or> ::= <and> ( "v" <or> )?
- * <and> ::= <exp> ( "^" <or> )?
+ * <and> ::= "~"? <exp> ( "^" <or> )?
  * <exp> ::= "0" | "1" | "A" | "B" | ... | "Z"
  * <exp> ::= "(" <or> ")"
  */
@@ -68,13 +68,21 @@ export class BooleanParser extends Parser {
 	/**
 	 * Parse an and node
 	 *
-	 * <and> ::= <e3> ( "^" <e1> )?
+	 * <and> ::= "~"? <exp> ( "^" <or> )?
 	 *
 	 * @returns {Node}
 	 * @private
 	 */
 	_parse_and() {
-		let node = this._parse_exp();
+		let node;
+
+		if (this.peek() === '~') {
+			this.next();
+			node = this._parse_exp();
+			node = new NotNode(node);
+		} else {
+			node = this._parse_exp();
+		}
 
 		if (this.peek() === '^') {
 			this.next();
@@ -88,7 +96,7 @@ export class BooleanParser extends Parser {
 	/**
 	 * Parse an or node
 	 *
-	 * <e1> ::= <e2> ( "v" <e1> )?
+	 * <or> ::= <and> ( "v" <or> )?
 	 *
 	 * @returns {Node}
 	 * @private

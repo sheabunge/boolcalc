@@ -19,6 +19,9 @@ export class VariableNode extends Node {
 
 	/**
 	 * Set the value property
+	 *
+	 * If the value is not a valid boolean, then it will be set to null
+	 *
 	 * @param {boolean|null} value
 	 */
 	set value(value) {
@@ -40,7 +43,9 @@ export class VariableNode extends Node {
 
 	/**
 	 * Evaluate the node
+	 * @throws {Error} If the node value is null
 	 * @returns {boolean} Value of the node
+	 *
 	 */
 	eval() {
 		if (this.value === null) {

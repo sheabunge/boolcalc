@@ -22,10 +22,10 @@ let pad = (text, size) => {
 /**
  * Generates a truth table
  * @param {Array} vars Array of VariableNodes
- * @param {Node} tree  Tree to use for evaluation
+ * @param {Array} nodes Tree to use for evaluation
  * @returns {Array} Computed table
  */
-let truth_table = (vars, tree) => {
+let truth_table = (vars, nodes) => {
 	let num_tests = Math.pow(2, vars.length);
 	let table = [];
 
@@ -37,13 +37,30 @@ let truth_table = (vars, tree) => {
 		}
 
 		console.log('vars: ' + vars);
-		console.log('tree: ' + tree);
 
-		inputs.push(tree.eval() ? '1' : '0');
+		for (let node of nodes) {
+			inputs.push(node.eval() ? '1' : '0');
+		}
+
 		table.push(inputs);
 	}
 
 	return table;
+};
+
+let traverse_tree = (node, list) => {
+	if (node === null || node instanceof ValueNode) {
+		return;
+	}
+
+	list.add(node);
+
+	if (node instanceof UnaryNode) {
+		traverse_tree(node.child, list);
+	} else if (node instanceof BinaryNode) {
+		traverse_tree(node.left, list);
+		traverse_tree(node.right, list);
+	}
 };
 
 /**
@@ -58,7 +75,13 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 
 		$scope.tree = $scope.parser.parse();
 
+		let nodes = new Set();
+		traverse_tree($scope.tree, nodes);
+
+		$scope.nodes = Array.from(nodes);
+		$scope.nodes.reverse();
+
 		let vars = $scope.parser.get_vars();
-		$scope.table = truth_table(vars, $scope.tree);
+		$scope.table = truth_table(vars, $scope.nodes);
 	};
 }]);

@@ -40,10 +40,11 @@ export class NotNode extends UnaryNode {
 	 * @returns {string}
 	 */
 	toString() {
+
 		if (this.child instanceof BinaryNode) {
-			return '~ (' + this.child + ')'
+			return '~(' + this.child + ')'
 		}
 
-		return '~ ' + this.child;
+		return '~' + this.child;
 	}
 }

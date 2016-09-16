@@ -37,7 +37,7 @@
 					<th ng-repeat="node in nodes">{{ '' + node }}</th>
 				</tr>
 				</thead>
-				<tbody><
+				<tbody>
 					<tr ng-repeat="row in table">
 						<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' }}">{{ cell }}</td>
 					</tr>

@@ -44,7 +44,18 @@ export class AndNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		return this.left + ' ∧ ' + this.right;
+		let left = this.left.toString();
+		let right = this.right.toString();
+
+		// ensure that OR nodes have brackets to maintain specificity
+		if (this.left instanceof OrNode) {
+			left = '(' + left + ')';
+		}
+		if (this.right instanceof OrNode) {
+			right = '(' + right + ')';
+		}
+
+		return left + ' ∧ ' + right;
 	}
 }
 

@@ -6,9 +6,9 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Boolean Expression Parser</title>
 
-
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">	<link rel="stylesheet" href="dist/app.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="dist/app.css">
 
 	<script src="dist/app.js"></script>
 </head>
@@ -28,26 +28,26 @@
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
-
 			</form>
 
 			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
 				<thead>
 				<tr>
-					<th ng-repeat="var in parser.get_vars()">{{ var.toString() }}</th>
-					<th ng-repeat="node in nodes">{{ node.toString() }}</th>
+					<th ng-repeat="var in parser.get_vars()">{{ '' + var }}</th>
+					<th ng-repeat="node in nodes">{{ '' + node }}</th>
 				</tr>
 				</thead>
-				<tr ng-repeat="row in table">
-					<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' ? 'true' : 'false' }}">{{ cell }}</td>
-				</tr>
+				<tbody><
+					<tr ng-repeat="row in table">
+						<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' }}">{{ cell }}</td>
+					</tr>
+				</tbody>
 			</table>
-
 		</main>
 	</div>
 
 	<footer class="footer">
-		<p>&copy; Shea Bunge, 2016</p>
+		<p>Shea Bunge, 2016</p>
 	</footer>
 </body>
 </html>

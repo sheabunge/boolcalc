@@ -36,8 +36,6 @@ let truth_table = (vars, nodes) => {
 			vars[i].value = inputs[i] === '1';
 		}
 
-		console.log('vars: ' + vars);
-
 		for (let node of nodes) {
 			inputs.push(node.eval() ? '1' : '0');
 		}

@@ -1,5 +1,8 @@
 
-import {BooleanParser} from './classes/bool-parser.js';
+import {BooleanParser} from './parser/boolean';
+import {UnaryNode} from './nodes/unary';
+import {BinaryNode} from './nodes/binary';
+import {ValueNode} from './nodes/value';
 import angular from 'angular';
 
 /**
@@ -28,7 +31,6 @@ let truth_table = (vars, tree) => {
 
 	for (let test = 0; test < num_tests; ++test) {
 		let inputs = pad(test.toString(2), vars.length).split('');
-		console.log('inputs: ' + inputs);
 
 		for (let i = 0; i < inputs.length; ++i) {
 			vars[i].value = inputs[i] === '1';
@@ -38,7 +40,6 @@ let truth_table = (vars, tree) => {
 		console.log('tree: ' + tree);
 
 		inputs.push(tree.eval() ? '1' : '0');
-
 		table.push(inputs);
 	}
 

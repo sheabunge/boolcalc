@@ -1,8 +1,10 @@
 
+import {Node} from './base';
+
 /**
- * Represents a node
+ * Represents a node with two children
  */
-export class Node {
+export class BinaryNode extends Node {
 
 	/**
 	 * @constructor
@@ -10,17 +12,9 @@ export class Node {
 	 * @param {Node} right
 	 */
 	constructor(left, right) {
+		super();
 		this.left = left;
 		this.right = right;
-	}
-
-	/**
-	 * Evaluate the node
-	 * @abstract
-	 * @returns {*}
-	 */
-	eval() {
-		throw new TypeError('eval() method not implemented');
 	}
 
 	/**
@@ -35,7 +29,7 @@ export class Node {
 /**
  * Represents an "and" node
  */
-export class AndNode extends Node {
+export class AndNode extends BinaryNode {
 
 	/**
 	 * Evaluate the node
@@ -57,7 +51,7 @@ export class AndNode extends Node {
 /**
  * Represents an "or" node
  */
-export class OrNode extends Node {
+export class OrNode extends BinaryNode {
 
 	/**
 	 * Evaluates the node
@@ -76,32 +70,3 @@ export class OrNode extends Node {
 	}
 }
 
-/**
- * Represents a "not" Node
- */
-export class NotNode extends Node {
-
-	/**
-	 * @constructor
-	 * @param {Node} node
-	 */
-	constructor(node) {
-		super(node, null);
-	}
-
-	/**
-	 * Evaluates the node
-	 * @returns {boolean} The result of ~N
-	 */
-	eval() {
-		return ! this.left.eval();
-	}
-
-	/**
-	 * Returns a string representation of the node
-	 * @returns {string}
-	 */
-	toString() {
-		return '~ ' + this.left;
-	}
-}

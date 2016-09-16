@@ -1,15 +1,16 @@
 
-import {Parser} from './parser.js';
-import {AndNode, OrNode, NotNode} from './nodes.js';
-import {VariableNode, TrueNode, FalseNode} from './bool-nodes.js';
+import {Parser} from './base';
+import {AndNode, OrNode} from '../nodes/binary';
+import {NotNode} from '../nodes/unary';
+import {ValueNode, VariableNode} from '../nodes/value';
 
 
 /**
  * Parses a boolean expression
  *
- * <or> ::= <and> ( "v" <or> )?
+ * <or>  ::= <and> ( "v" <or> )?
  * <and> ::= "~"? <exp> ( "^" <or> )?
- * <exp> ::= "0" | "1" | "A" | "B" | ... | "Z"
+ * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]*
  * <exp> ::= "(" <or> ")"
  */
 export class BooleanParser extends Parser {
@@ -80,9 +81,9 @@ export class BooleanParser extends Parser {
 			let var_label = this.peek();
 
 			if (var_label === '1') {
-				node = new TrueNode();
+				node = new ValueNode(true);
 			} else if (var_label === '0') {
-				node = new FalseNode();
+				node = new ValueNode(false);
 			} else {
 				node = this.create_var(var_label);
 			}

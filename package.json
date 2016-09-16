@@ -1,16 +1,16 @@
 {
-  "name": "boolparser",
-  "description": "",
-  "homepage": "http://sheabunge.github.io/boolparser",
+  "name": "boolcalc",
+  "description": "Web application for parsing and evaluating boolean algebra expressions",
+  "homepage": "http://sheabunge.github.io/boolcalc",
   "version": "1.0.0",
-  "author": "Shea Bunge <shea@bungeshea.com>",
+  "author": "Shea Bunge <bungeshea@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sheabunge/boolparser.git"
+    "url": "git+https://github.com/sheabunge/boolcalc.git"
   },
   "bugs": {
-    "url": "https://github.com/sheabunge/boolparser/issues"
+    "url": "https://github.com/sheabunge/boolcalc/issues"
   },
   "main": "gulpfile.babel.js",
   "babel": {

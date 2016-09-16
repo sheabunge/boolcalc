@@ -16,7 +16,7 @@ export class UnaryNode extends Node {
 	 * Returns a string representation of the node
 	 * @returns {string}
 	 */
-	pprint() {
+	toString() {
 		return 'Node(' + this.child + ')'
 	}
 }
@@ -38,7 +38,7 @@ export class NotNode extends UnaryNode {
 	 * Returns a string representation of the node
 	 * @returns {string}
 	 */
-	pprint() {
+	toString() {
 		if (this.child instanceof BinaryNode) {
 			return '~ (' + this.child + ')'
 		}

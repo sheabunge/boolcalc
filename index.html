@@ -34,8 +34,8 @@
 			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
 				<thead>
 				<tr>
-					<th ng-repeat="var in parser.get_vars()">{{ var.label }}</th>
-					<th>result</th>
+					<th ng-repeat="var in parser.get_vars()">{{ var.toString() }}</th>
+					<th ng-repeat="node in nodes">{{ node.toString() }}</th>
 				</tr>
 				</thead>
 				<tr ng-repeat="row in table">

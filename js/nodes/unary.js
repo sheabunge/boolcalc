@@ -1,4 +1,5 @@
 
+import {Node} from './base';
 import {BinaryNode} from './binary';
 
 export class UnaryNode extends Node {

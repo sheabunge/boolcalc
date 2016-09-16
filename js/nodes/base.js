@@ -18,6 +18,14 @@ export class Node {
 	 * @returns {string}
 	 */
 	toString() {
-		return 'Node()'
+		return this.pprint();
+	}
+
+	/**
+	 * Returns a nice representation of the node
+	 * @returns {string}
+	 */
+	pprint() {
+		return 'Node()';
 	}
 }

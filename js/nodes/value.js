@@ -52,7 +52,7 @@ export class ValueNode extends Node {
 	 * Retrieve a string representation of the node
 	 * @returns {string}
 	 */
-	toString() {
+	pprint() {
 		return this.value ? '1' : '0';
 	}
 }
@@ -78,5 +78,9 @@ export class VariableNode extends ValueNode {
 	 */
 	toString() {
 		return this.label + '(' + this.value + ')';
+	}
+
+	pprint() {
+		return this.label;
 	}
 }

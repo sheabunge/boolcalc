@@ -21,7 +21,7 @@ export class BinaryNode extends Node {
 	 * Returns a string representation of the node
 	 * @returns {string}
 	 */
-	toString() {
+	pprint() {
 		return 'Node(' + this.left + ', ' + this.right + ')'
 	}
 }
@@ -43,7 +43,7 @@ export class AndNode extends BinaryNode {
 	 * Returns a string representation of the node
 	 * @returns {string}
 	 */
-	toString() {
+	pprint() {
 		return this.left + ' ^ ' + this.right;
 	}
 }
@@ -65,7 +65,7 @@ export class OrNode extends BinaryNode {
 	 * Returns a string representation of the node
 	 * @returns {string}
 	 */
-	toString() {
+	pprint() {
 		return this.left + ' v ' + this.right;
 	}
 }

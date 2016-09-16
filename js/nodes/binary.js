@@ -44,7 +44,7 @@ export class AndNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		return this.left + ' ^ ' + this.right;
+		return this.left + ' ∧ ' + this.right;
 	}
 }
 
@@ -66,7 +66,7 @@ export class OrNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		return this.left + ' v ' + this.right;
+		return this.left + ' ∨ ' + this.right;
 	}
 }
 

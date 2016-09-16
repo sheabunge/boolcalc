@@ -24,14 +24,14 @@
 
 				<div class="form-group">
 					<label for="exp">Expression</label>
-					<input ng-model="exp" type="text" id="exp" class="form-control">
+					<input ng-model="exp" type="text" id="exp" class="form-control" autocomplete="off">
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
 
 			</form>
 
-			<table class="table table-hover table-bordered truth-table"  ng-if="parser">
+			<table class="table table-hover table-bordered truth-table"  ng-if="table.length">
 				<thead>
 				<tr>
 					<th ng-repeat="var in parser.get_vars()">{{ var.label }}</th>

@@ -1,7 +1,7 @@
 {
   "name": "boolcalc",
   "description": "Web application for parsing and evaluating boolean algebra expressions",
-  "homepage": "http://sheabunge.github.io/boolcalc",
+  "homepage": "https://sheabunge.github.io/boolcalc",
   "version": "1.0.0",
   "author": "Shea Bunge <bungeshea@gmail.com>",
   "license": "MIT",
@@ -14,9 +14,7 @@
   },
   "main": "gulpfile.babel.js",
   "babel": {
-    "presets": [
-      "es2015"
-    ]
+    "presets": ["es2015"]
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
@@ -39,5 +37,9 @@
   },
   "dependencies": {
     "angular": "^1.5.8"
-  }
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": ["boolean", "calculator"]
 }

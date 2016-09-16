@@ -102,3 +102,5 @@ gulp.task('clean', () => {
 gulp.task('default', () => {
 	run('clean', ['css', 'js'])
 });
+
+gulp.task('test', ['eslint']);

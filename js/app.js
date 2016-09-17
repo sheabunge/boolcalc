@@ -8,6 +8,13 @@ import angular from 'angular';
  */
 let app = angular.module('app', []);
 
+/**
+ * Pad a string with '0' characters until it is a specified length
+ * Returns the string unaltered if the string is not less than the specified length
+ * @param {string} text String to alter
+ * @param {number} size Desired string length
+ * @returns {string} text altered so it is at least the specified length
+ */
 let pad = (text, size) => {
 	while (text.length < size) {
 		text = '0' + text;
@@ -23,20 +30,27 @@ let pad = (text, size) => {
  * @returns {Array} Computed table
  */
 let truth_table = (vars, nodes) => {
-	let num_tests = Math.pow(2, vars.length);
 	let table = [];
 
+	// The number of tests will be 2^(number of vars)
+	let num_tests = Math.pow(2, vars.length);
+
 	for (let test = 0; test < num_tests; ++test) {
+
+		// Construct a list of inputs by converting the test number to binary
 		let inputs = pad(test.toString(2), vars.length).split('');
 
+		// Set each variable value based on the digits of the binary string
 		for (let i = 0; i < inputs.length; ++i) {
 			vars[i].value = inputs[i] === '1';
 		}
 
+		// For each node, evaluate it with the new variable inputs
 		for (let node of nodes) {
 			inputs.push(node.eval() ? '1' : '0');
 		}
 
+		// Add the row to the table
 		table.push(inputs);
 	}
 

@@ -2,16 +2,17 @@
 import {Parser} from './base';
 import {Lexer, token_types} from './lexer';
 import {InvalidInputError} from './exceptions';
-import {BinaryNode, AndNode, OrNode} from '../nodes/binary';
+
+import {BinaryNode, AndNode, OrNode, XOrNode, EquivNode} from '../nodes/binary';
 import {UnaryNode, NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
 
 /**
  * Parses a boolean expression
  *
- * <or>  ::= <and> ( "v" <or> )?
- * <and> ::= "~"? <exp> ( "^" <or> )?
- * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]*
+ * <or>  ::= <and> ( ("∨" | "⊻") <or> )?
+ * <and> ::= "~"? <exp> ( ("∧" | "≡")  <or> )?
+ * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]* | 0 | 1
  * <exp> ::= "(" <or> ")"
  */
 export class BooleanParser extends Parser {
@@ -61,16 +62,17 @@ export class BooleanParser extends Parser {
 	/**
 	 * Parse an expression node
 	 *
-	 * <exp> ::= "A" | "B" | ... | "Z"
-	 * <exp> ::= "(" <e1> ")"
+	 * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]* | 0 | 1
+	 * <exp> ::= "(" <or> ")"
 	 *
 	 * @returns {Node}
 	 * @private
 	 */
 	_parse_exp() {
 		let node;
+		let next = this.peek();
 
-		if (this.peek() === token_types.OPEN_BR) {
+		if (next === token_types.OPEN_BR) {
 			this.next();
 			node = this._parse_or();
 
@@ -80,12 +82,17 @@ export class BooleanParser extends Parser {
 
 			this.next();
 
-		} else if (this.peek() === token_types.VAR) {
+		} else if (next === token_types.VAR) {
 			let var_label = this.peek_symbol().value;
 			node = this.create_var(var_label);
 			this.next();
-		} else if (this.peek() === token_types.CONST) {
-			node = new ValueNode(this.peek_symbol().value !== '0');
+
+		} else if (next === token_types.CONST_TRUE) {
+			node = new ValueNode(true);
+			this.next();
+
+		} else if (next === token_types.CONST_FALSE) {
+			node = new ValueNode(false);
 			this.next();
 		}
 
@@ -93,9 +100,9 @@ export class BooleanParser extends Parser {
 	}
 
 	/**
-	 * Parse an and node
+	 * Parse an AND node
 	 *
-	 * <and> ::= "~"? <exp> ( "^" <or> )?
+	 * <and> ::= "~"? <exp> ( ("∧" | "≡")  <and> )?
 	 *
 	 * @returns {Node}
 	 * @private
@@ -107,34 +114,48 @@ export class BooleanParser extends Parser {
 			this.next();
 			node = this._parse_exp();
 			node = new NotNode(node);
+
 		} else {
 			node = this._parse_exp();
 		}
 
-		if (this.peek() === token_types.OP_AND) {
+		let peek = this.peek();
+
+		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV) {
 			this.next();
 			let term = this._parse_and();
-			node = new AndNode(node, term);
+
+			if (peek === token_types.OP_EQUIV) {
+				node = new EquivNode(node, term);
+			} else {
+				node = new AndNode(node, term);
+			}
 		}
 
 		return node;
 	}
 
 	/**
-	 * Parse an or node
+	 * Parse an OR node
 	 *
-	 * <or> ::= <and> ( "v" <or> )?
+	 * <or> ::= <and> ( ("∨" | "⊻") <or> )?
 	 *
 	 * @returns {Node}
 	 * @private
 	 */
 	_parse_or() {
 		let node = this._parse_and();
+		let peek = this.peek();
 
-		if (this.peek() === token_types.OP_OR) {
+		if (peek === token_types.OP_OR || peek === token_types.OP_XOR) {
 			this.next();
 			let term = this._parse_or();
-			node = new OrNode(node, term);
+
+			if (peek === token_types.OP_XOR) {
+				node = new XOrNode(node, term);
+			} else {
+				node = new OrNode(node, term);
+			}
 		}
 
 		return node;

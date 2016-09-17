@@ -33,7 +33,7 @@ export class AndNode extends BinaryNode {
 
 	/**
 	 * Evaluate the node
-	 * @returns {boolean} The result of (L ^ R)
+	 * @returns {boolean} The result of (L ∧ R)
 	 */
 	eval() {
 		return this.left.eval() && this.right.eval();
@@ -60,13 +60,13 @@ export class AndNode extends BinaryNode {
 }
 
 /**
- * Represents an "or" node
+ * Represents an OR node
  */
 export class OrNode extends BinaryNode {
 
 	/**
 	 * Evaluates the node
-	 * @returns {boolean} The result of (L v R)
+	 * @returns {boolean} The result of (L ∨ R)
 	 */
 	eval() {
 		return this.left.eval() || this.right.eval();
@@ -81,3 +81,46 @@ export class OrNode extends BinaryNode {
 	}
 }
 
+/**
+ * Represents an XOR node
+ */
+export class XOrNode extends BinaryNode {
+
+	/**
+	 * Evaluates the node
+	 * @returns {boolean} The result of (L ⊻ R)
+	 */
+	eval() {
+		return this.left.eval() ? ! this.right.eval() : this.right.eval();
+	}
+
+	/**
+	 * Returns a string representation of the node
+	 * @returns {string}
+	 */
+	toString() {
+		return this.left + ' ⊻ ' + this.right;
+	}
+}
+
+/**
+ * Represents a equivalence node
+ */
+export class EquivNode extends BinaryNode {
+
+	/**
+	 * Evaluates the node
+	 * @returns {boolean} The result of (L ≡ R)
+	 */
+	eval() {
+		return this.left.eval() === this.right.eval();
+	}
+
+	/**
+	 * Returns a string representation of the node
+	 * @returns {string}
+	 */
+	toString() {
+		return this.left + ' ≡ ' + this.right;
+	}
+}

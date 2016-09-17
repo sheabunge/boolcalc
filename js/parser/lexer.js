@@ -28,17 +28,20 @@ class Token {
  * @type Object
  */
 export const token_types = {
-	OP_AND:   new Token('OP_AND'),
-	OP_OR:    new Token('OP_OR'),
-	OP_NOT:   new Token('OP_NOT'),
-	VAR:      new Token('VAR'),
-	CONST:    new Token('CONST'),
-	OPEN_BR:  new Token('OPEN_BR'),
-	CLOSE_BR: new Token('CLOSE_BR')
+	OP_AND:      new Token('OP_AND'),
+	OP_OR:       new Token('OP_OR'),
+	OP_NOT:      new Token('OP_NOT'),
+	OP_XOR:      new Token('OP_XOR'),
+	OP_EQUIV:    new Token('OP_EQUIV'),
+	CONST_TRUE:  new Token('CONST_TRUE'),
+	CONST_FALSE: new Token('CONST_FALSE'),
+	VAR:         new Token('VAR'),
+	OPEN_BR:     new Token('OPEN_BR'),
+	CLOSE_BR:    new Token('CLOSE_BR')
 };
 
 /**
- * Map of each token with the regular expression pattern used to match it
+ * Map of each token with the regular expression pattern used to match it.
  *
  * Each pattern should only match from the beginning of the string (^)
  * And should only match a single element (i.e. not global and no captures).
@@ -46,11 +49,14 @@ export const token_types = {
  * @type {Map}
  */
 export const patterns = new Map([
-	[token_types.OP_AND, /^(?:[∧^]|AND\b)/i],
-	[token_types.OP_OR, /^(?:[∨v]|OR\b)/i],
-	[token_types.OP_NOT, /^(?:~|NOT\b)/i],
+	[token_types.OP_AND, /^(?:[∧^&·]|AND\b)/i],
+	[token_types.OP_OR, /^(?:[∨v+∥|]|OR\b)/i],
+	[token_types.OP_NOT, /^(?:[~'!¬]|NOT\b)/i],
+	[token_types.OP_XOR, /^(?:[⊻⊕]|XOR\b)/i],
+	[token_types.OP_EQUIV, /^(?:[⇔≡↔]|EQUIV\b)/i],
+	[token_types.CONST_TRUE, /^(?:[1⊤]|T\b|TRUE\b)/i],
+	[token_types.CONST_FALSE, /^(?:[0⊥]|F\b|FALSE\b)/i],
 	[token_types.VAR, /^[A-Za-z_]\w*/],
-	[token_types.CONST, /^[01]/],
 	[token_types.OPEN_BR, /^\(/],
 	[token_types.CLOSE_BR, /^\)/]
 ]);

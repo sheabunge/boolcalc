@@ -26,6 +26,7 @@ export class BooleanParser extends Parser {
 		let tokens = lexer.read_all();
 		console.log('tokens: ' + tokens);
 
+		tokens.reverse();
 		super(tokens);
 
 		this._vars = [];
@@ -110,13 +111,11 @@ export class BooleanParser extends Parser {
 	_parse_and() {
 		let node;
 
+		node = this._parse_exp();
+
 		if (this.peek() === token_types.OP_NOT) {
 			this.next();
-			node = this._parse_exp();
 			node = new NotNode(node);
-
-		} else {
-			node = this._parse_exp();
 		}
 
 		let peek = this.peek();
@@ -126,13 +125,13 @@ export class BooleanParser extends Parser {
 			let term = this._parse_and();
 
 			if (peek === token_types.OP_EQUIV) {
-				node = new EquivNode(node, term);
+				node = new EquivNode(term, node);
 
 			} else if (peek === token_types.OP_IMPLIES) {
-				node = new ImpliesNode(node, term);
+				node = new ImpliesNode(term, node);
 
 			} else {
-				node = new AndNode(node, term);
+				node = new AndNode(term, node);
 			}
 		}
 
@@ -156,9 +155,9 @@ export class BooleanParser extends Parser {
 			let term = this._parse_or();
 
 			if (peek === token_types.OP_XOR) {
-				node = new XOrNode(node, term);
+				node = new XOrNode(term, node);
 			} else {
-				node = new OrNode(node, term);
+				node = new OrNode(term, node);
 			}
 		}
 
@@ -172,7 +171,9 @@ export class BooleanParser extends Parser {
 	 * @private
 	 */
 	_parse() {
-		return this._parse_or();
+		let node = this._parse_or();
+		this._vars.reverse();
+		return node;
 	}
 
 	/**

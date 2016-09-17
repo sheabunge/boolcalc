@@ -1,9 +1,5 @@
 
 import {BooleanParser} from './parser/boolean';
-import {Lexer, token_types} from './parser/lexer';
-import {UnaryNode} from './nodes/unary';
-import {BinaryNode} from './nodes/binary';
-import {ValueNode} from './nodes/value';
 import angular from 'angular';
 
 /**
@@ -47,21 +43,6 @@ let truth_table = (vars, nodes) => {
 	return table;
 };
 
-let traverse_tree = (node, list) => {
-	if (node === null || node instanceof ValueNode) {
-		return;
-	}
-
-	list.add(node);
-
-	if (node instanceof UnaryNode) {
-		traverse_tree(node.child, list);
-	} else if (node instanceof BinaryNode) {
-		traverse_tree(node.left, list);
-		traverse_tree(node.right, list);
-	}
-};
-
 /**
  * The main controller
  */
@@ -69,17 +50,26 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.exp = '';
 	$scope.table = [];
 
+	/**
+	 * Run when the form is submitted
+	 */
 	$scope.parse = () => {
+
+		// Create a new instance of the parser for the expression
 		$scope.parser = new BooleanParser($scope.exp);
 
+		// Parse the expression and store the node tree
 		$scope.tree = $scope.parser.parse();
 
+		// Traverse the tree and construct a list of nodes
 		let nodes = new Set();
-		traverse_tree($scope.tree, nodes);
+		BooleanParser.traverse_tree($scope.tree, nodes);
 
+		// Reverse the nodes before passing them to the template
 		$scope.nodes = Array.from(nodes);
 		$scope.nodes.reverse();
 
+		// Construct the truth table
 		let vars = $scope.parser.get_vars();
 		$scope.table = truth_table(vars, $scope.nodes);
 	};

@@ -1,8 +1,8 @@
 
 import {Parser} from './base';
 import {Lexer, token_types} from './lexer';
-import {AndNode, OrNode} from '../nodes/binary';
-import {NotNode} from '../nodes/unary';
+import {BinaryNode, AndNode, OrNode} from '../nodes/binary';
+import {UnaryNode, NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
 
 
@@ -148,6 +148,27 @@ export class BooleanParser extends Parser {
 	 */
 	_parse() {
 		return this._parse_or();
+	}
+
+	/**
+	 * Traverse a node tree and construct a list of the nodes
+	 * @param {Node} node The root node of the tree
+	 * @param {Set} list List to store the node objects in
+	 */
+	static traverse_tree(node, list) {
+
+		if (node === null || node instanceof ValueNode) {
+			return;
+		}
+
+		list.add(node);
+
+		if (node instanceof UnaryNode) {
+			BooleanParser.traverse_tree(node.child, list);
+		} else if (node instanceof BinaryNode) {
+			BooleanParser.traverse_tree(node.left, list);
+			BooleanParser.traverse_tree(node.right, list);
+		}
 	}
 }
 

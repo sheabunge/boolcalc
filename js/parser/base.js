@@ -22,11 +22,19 @@ export class Parser {
 	}
 
 	/**
-	 * Retrieve the value of the next token without moving the pointer
-	 * @returns {null|*}
+	 * Retrieve the next symbol without moving the pointer
+	 * @returns {null|Symbol}
+	 */
+	peek_symbol() {
+		return this.end() ? null : this.tokens[this.current];
+	}
+
+	/**
+	 * Retrieve the next token without moving the pointer
+	 * @returns {null|Token}
 	 */
 	peek() {
-		return this.end() ? null : this.tokens[this.current];
+		return this.peek_symbol() ? this.peek_symbol().token : null;
 	}
 
 	/**
@@ -34,7 +42,7 @@ export class Parser {
 	 *
 	 * If the first argument is provided, only move the pointer if the tokens match
 	 *
-	 * @param {*} [token] Only advance the pointer if the next token matches this
+	 * @param {Token|null} [token] Only advance the pointer if the next token matches this
 	 * @returns {boolean} Whether the pointer was advanced
 	 */
 	next(token = null) {

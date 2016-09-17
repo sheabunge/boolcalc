@@ -1,5 +1,6 @@
 
 import {BooleanParser} from './parser/boolean';
+import {Lexer, token_types} from './parser/lexer';
 import {UnaryNode} from './nodes/unary';
 import {BinaryNode} from './nodes/binary';
 import {ValueNode} from './nodes/value';

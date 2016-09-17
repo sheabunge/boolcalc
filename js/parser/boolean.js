@@ -1,5 +1,6 @@
 
 import {Parser} from './base';
+import {Lexer, token_types} from './lexer';
 import {AndNode, OrNode} from '../nodes/binary';
 import {NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
@@ -20,8 +21,10 @@ export class BooleanParser extends Parser {
 	 * @param {string} exp
 	 */
 	constructor(exp) {
+		let lexer = new Lexer(exp);
+		let tokens = lexer.read_all();
+		console.log('tokens: ' + tokens);
 
-		let tokens = exp.match(/[A-Za-z_]\w*|[v^~01()]/g);
 		super(tokens);
 
 		this._vars = [];
@@ -67,27 +70,22 @@ export class BooleanParser extends Parser {
 	_parse_exp() {
 		let node;
 
-		if (this.peek() === '(') {
+		if (this.peek() === token_types.OPEN_BR) {
 			this.next();
 			node = this._parse_or();
 
-			if (this.peek() !== ')') {
+			if (this.peek() !== token_types.CLOSE_BR) {
 				throw new Error('Closing parenthesis not found');
 			}
 
 			this.next();
 
-		} else if (this.peek().match(/[A-Za-z_]\w*|[01]/)) {
-			let var_label = this.peek();
-
-			if (var_label === '1') {
-				node = new ValueNode(true);
-			} else if (var_label === '0') {
-				node = new ValueNode(false);
-			} else {
-				node = this.create_var(var_label);
-			}
-
+		} else if (this.peek() === token_types.VAR) {
+			let var_label = this.peek_symbol().value;
+			node = this.create_var(var_label);
+			this.next();
+		} else if (this.peek() === token_types.CONST) {
+			node = new ValueNode(this.peek_symbol().value !== '0');
 			this.next();
 		}
 
@@ -105,7 +103,7 @@ export class BooleanParser extends Parser {
 	_parse_and() {
 		let node;
 
-		if (this.peek() === '~') {
+		if (this.peek() === token_types.OP_NOT) {
 			this.next();
 			node = this._parse_exp();
 			node = new NotNode(node);
@@ -113,7 +111,7 @@ export class BooleanParser extends Parser {
 			node = this._parse_exp();
 		}
 
-		if (this.peek() === '^') {
+		if (this.peek() === token_types.OP_AND) {
 			this.next();
 			let term = this._parse_and();
 			node = new AndNode(node, term);
@@ -133,7 +131,7 @@ export class BooleanParser extends Parser {
 	_parse_or() {
 		let node = this._parse_and();
 
-		if (this.peek() === 'v') {
+		if (this.peek() === token_types.OP_OR) {
 			this.next();
 			let term = this._parse_or();
 			node = new OrNode(node, term);

@@ -41,6 +41,11 @@ th.variable, th:last-of-type {
 	background-color: $pale-yellow-bg;
 }
 
+.instructions {
+	text-align: center;
+	margin-top: 1em;
+}
+
 .value-true {
 	background-color: $pale-green-bg;
 }

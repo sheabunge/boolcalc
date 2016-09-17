@@ -20,6 +20,7 @@
 		</div>
 
 		<main ng-controller="Parser">
+
 			<form ng-submit="parse()">
 
 				<div class="form-group">
@@ -48,6 +49,12 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<section class="instructions">
+				<p>Enter a boolean expression such as <code>A ^ (B v C)</code> in the box and click <kbd>Parse</kbd>.</p>
+				<p>Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>IMPLIES</code> and <code>EQUIV</code>.</p>
+			</section>
+
 		</main>
 	</div>
 

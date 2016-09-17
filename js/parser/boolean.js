@@ -73,11 +73,11 @@ export class BooleanParser extends Parser {
 		let node;
 		let next = this.peek();
 
-		if (next === token_types.OPEN_BR) {
+		if (next === token_types.CLOSE_BR) {
 			this.next();
 			node = this._parse_or();
 
-			if (this.peek() !== token_types.CLOSE_BR) {
+			if (this.peek() !== token_types.OPEN_BR) {
 				throw new InvalidInputError('Expression contains unmatched parenthesis');
 			}
 

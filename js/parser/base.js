@@ -71,8 +71,8 @@ export class Parser {
 		let node = this._parse();
 
 		if (! this.end()) {
-			console.log(this.tokens);
-			console.log(this.current);
+			console.log('tokens: ' + this.tokens);
+			console.log('pointer: ' + this.current);
 			throw new InvalidInputError('Expression contains malformed syntax');
 		}
 

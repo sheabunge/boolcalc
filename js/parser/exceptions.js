@@ -18,4 +18,5 @@ export class ParseError {
 ParseError.prototype = Object.create(Error.prototype);
 
 export class InvalidInputError extends ParseError {
+
 }

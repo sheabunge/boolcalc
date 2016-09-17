@@ -33,6 +33,17 @@ let pad = (text, size) => {
 let truth_table = (vars, nodes) => {
 	let table = [];
 
+	if (vars.length < 1) {
+		let row = [];
+
+		for (let node of nodes) {
+			row.push(node.eval() ? '1' : '0');
+		}
+
+		table.push(row);
+		return table;
+	}
+
 	// The number of tests will be 2^(number of vars)
 	let num_tests = Math.pow(2, vars.length);
 
@@ -97,7 +108,6 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 		try {
 			parse_exp();
 		} catch (e) {
-			$scope.error = e.message;
 
 			if (e instanceof ParseError) {
 				console.log('Parse Error: ' + e.message);

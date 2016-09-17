@@ -30,6 +30,11 @@
 				<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
 			</form>
 
+			<aside ng-if="error" class="parse-error alert-danger">
+				<p><strong>Error in expression:</strong></p>
+				<p>{{ error }}</p>
+			</aside>
+
 			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
 				<thead>
 				<tr>

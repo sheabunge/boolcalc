@@ -1,5 +1,6 @@
 
 import {Node} from './base';
+import {ParseError} from '../parser/exceptions';
 
 /**
  * Node representing a value
@@ -36,13 +37,13 @@ export class ValueNode extends Node {
 
 	/**
 	 * Evaluate the node
-	 * @throws {Error} If the node value is null
+	 * @throws {ParseError} If the node value is null
 	 * @returns {boolean} Value of the node
 	 *
 	 */
 	eval() {
 		if (this.value === null) {
-			throw new Error('Value of node cannot be null')
+			throw new ParseError('Value of node cannot be null')
 		}
 
 		return this.value;

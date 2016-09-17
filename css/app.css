@@ -49,6 +49,15 @@ th.variable, th:last-of-type {
 	background-color: $pale-red-bg;
 }
 
+.parse-error {
+	text-align: center;
+	padding: 25px 20px 15px;
+}
+
+.parse-error + .truth-table {
+	margin-top: 2em;
+}
+
 form {
 	max-width: 300px;
 	margin: 0 auto 2em;

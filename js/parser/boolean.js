@@ -1,10 +1,10 @@
 
 import {Parser} from './base';
 import {Lexer, token_types} from './lexer';
+import {InvalidInputError} from './exceptions';
 import {BinaryNode, AndNode, OrNode} from '../nodes/binary';
 import {UnaryNode, NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
-
 
 /**
  * Parses a boolean expression
@@ -75,7 +75,7 @@ export class BooleanParser extends Parser {
 			node = this._parse_or();
 
 			if (this.peek() !== token_types.CLOSE_BR) {
-				throw new Error('Closing parenthesis not found');
+				throw new InvalidInputError('Expression contains unmatched parenthesis');
 			}
 
 			this.next();

@@ -1,5 +1,6 @@
 
 import {BooleanParser} from './parser/boolean';
+import {ParseError} from './parser/exceptions';
 import angular from 'angular';
 
 /**
@@ -63,11 +64,11 @@ let truth_table = (vars, nodes) => {
 app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.exp = '';
 	$scope.table = [];
+	$scope.error = null;
 
-	/**
-	 * Run when the form is submitted
-	 */
-	$scope.parse = () => {
+	let parse_exp = () => {
+		$scope.table = [];
+		$scope.error = null;
 
 		// Create a new instance of the parser for the expression
 		$scope.parser = new BooleanParser($scope.exp);
@@ -86,5 +87,24 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 		// Construct the truth table
 		let vars = $scope.parser.get_vars();
 		$scope.table = truth_table(vars, $scope.nodes);
+	};
+
+	/**
+	 * Run when the form is submitted
+	 */
+	$scope.parse = () => {
+
+		try {
+			parse_exp();
+		} catch (e) {
+			$scope.error = e.message;
+
+			if (e instanceof ParseError) {
+				console.log('Parse Error: ' + e.message);
+				$scope.error = e.message;
+			} else {
+				throw e;
+			}
+		}
 	};
 }]);

@@ -1,3 +1,6 @@
+
+import {InvalidInputError} from './exceptions';
+
 /**
  * Base parser class
  */
@@ -57,7 +60,7 @@ export class Parser {
 
 	/**
 	 * Parse the tokens and return the root node
-	 * @throws {Error} if extra content is found at the end of input
+	 * @throws {ParseError} if extra content is found at the end of input
 	 * @returns {Node} the Node at the root of the tree
 	 */
 	parse() {
@@ -66,7 +69,7 @@ export class Parser {
 		if (! this.end()) {
 			console.log(this.tokens);
 			console.log(this.current);
-			throw new Error('extra content found at end of input');
+			throw new InvalidInputError('Expression contains malformed syntax');
 		}
 
 		return node;

@@ -1,4 +1,6 @@
 
+import {InvalidInputError} from './exceptions';
+
 /**
  * Represents a token
  */
@@ -139,7 +141,7 @@ export class Lexer {
 			}
 		}
 
-		throw new Error('Unknown symbol: ' + this.data.substr(self.pointer, 5));
+		throw new InvalidInputError('Unknown symbol detected in expression');
 	}
 
 	/**

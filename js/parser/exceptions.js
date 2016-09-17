@@ -20,3 +20,7 @@ ParseError.prototype = Object.create(Error.prototype);
 export class InvalidInputError extends ParseError {
 
 }
+
+export class ExpressionSyntaxError extends InvalidInputError {
+
+}

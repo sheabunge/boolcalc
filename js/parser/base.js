@@ -64,6 +64,10 @@ export class Parser {
 	 * @returns {Node} the Node at the root of the tree
 	 */
 	parse() {
+		if (this.end()) {
+			throw new InvalidInputError('No input detected');
+		}
+
 		let node = this._parse();
 
 		if (! this.end()) {

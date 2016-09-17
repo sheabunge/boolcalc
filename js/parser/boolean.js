@@ -3,7 +3,7 @@ import {Parser} from './base';
 import {Lexer, token_types} from './lexer';
 import {InvalidInputError} from './exceptions';
 
-import {BinaryNode, AndNode, OrNode, XOrNode, EquivNode} from '../nodes/binary';
+import {BinaryNode, AndNode, OrNode, XOrNode, EquivNode, ImpliesNode} from '../nodes/binary';
 import {UnaryNode, NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
 
@@ -11,7 +11,7 @@ import {ValueNode, VariableNode} from '../nodes/value';
  * Parses a boolean expression
  *
  * <or>  ::= <and> ( ("∨" | "⊻") <or> )?
- * <and> ::= "~"? <exp> ( ("∧" | "≡")  <or> )?
+ * <and> ::= "~"? <exp> ( ("∧" | "≡" | "→")  <or> )?
  * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]* | 0 | 1
  * <exp> ::= "(" <or> ")"
  */
@@ -102,7 +102,7 @@ export class BooleanParser extends Parser {
 	/**
 	 * Parse an AND node
 	 *
-	 * <and> ::= "~"? <exp> ( ("∧" | "≡")  <and> )?
+	 * <and> ::= "~"? <exp> ( ("∧" | "≡" | "→")  <and> )?
 	 *
 	 * @returns {Node}
 	 * @private
@@ -121,12 +121,16 @@ export class BooleanParser extends Parser {
 
 		let peek = this.peek();
 
-		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV) {
+		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV || peek === token_types.OP_IMPLIES) {
 			this.next();
 			let term = this._parse_and();
 
 			if (peek === token_types.OP_EQUIV) {
 				node = new EquivNode(node, term);
+
+			} else if (peek === token_types.OP_IMPLIES) {
+				node = new ImpliesNode(node, term);
+
 			} else {
 				node = new AndNode(node, term);
 			}

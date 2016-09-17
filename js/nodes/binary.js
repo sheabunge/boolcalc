@@ -124,3 +124,25 @@ export class EquivNode extends BinaryNode {
 		return this.left + ' ≡ ' + this.right;
 	}
 }
+
+/**
+ * Represents an implication node
+ */
+export class ImpliesNode extends BinaryNode {
+
+	/**
+	 * Evaluates the node
+	 * @returns {boolean} The result of (L → R)
+	 */
+	eval() {
+		return this.left.eval() ? this.right.eval() : true;
+	}
+
+	/**
+	 * Returns a string representation of the node
+	 * @returns {string}
+	 */
+	toString() {
+		return this.left + ' → ' + this.right;
+	}
+}

@@ -109,15 +109,17 @@ export class BooleanParser extends Parser {
 	 * @private
 	 */
 	_parse_and() {
-		let node;
 
-		node = this._parse_exp();
+		// Begin by parsing the initial node
+		let node = this._parse_exp();
 
+		// If there is a not operator following, apply it to the previous node (remember, we are working in reverse)
 		if (this.peek() === token_types.OP_NOT) {
 			this.next();
 			node = new NotNode(node);
 		}
 
+		// Store the value of the next node so we don't need to keep calling this
 		let peek = this.peek();
 
 		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV || peek === token_types.OP_IMPLIES) {

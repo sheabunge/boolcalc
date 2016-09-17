@@ -50,7 +50,7 @@ export const token_types = {
  * @type {Map}
  */
 export const patterns = new Map([
-	[token_types.OP_AND, /^(?:[∧^&·]|AND\b)/i],
+	[token_types.OP_AND, /^(?:[∧^&·*]|AND\b)/i],
 	[token_types.OP_OR, /^(?:[∨v+∥|]|OR\b)/i],
 	[token_types.OP_NOT, /^(?:[~'!¬]|NOT\b)/i],
 	[token_types.OP_XOR, /^(?:[⊻⊕]|XOR\b)/i],

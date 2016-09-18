@@ -99,8 +99,13 @@ gulp.task('clean', () => {
 		.pipe(clean());
 });
 
+gulp.task('bootstrap', () => {
+	return gulp.src('node_modules/bootstrap/dist/css/bootstrap.min.css*')
+		.pipe(gulp.dest(dest));
+});
+
 gulp.task('default', () => {
-	run('clean', ['css', 'js'])
+	run('clean', ['bootstrap', 'css', 'js'])
 });
 
 gulp.task('test', ['eslint']);

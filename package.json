@@ -14,7 +14,9 @@
   },
   "main": "gulpfile.babel.js",
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
   },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
@@ -36,10 +38,14 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "angular": "^1.5.8"
+    "angular": "^1.5.8",
+    "bootstrap": "^3.3.7"
   },
   "scripts": {
     "test": "gulp test"
   },
-  "keywords": ["boolean", "calculator"]
+  "keywords": [
+    "boolean",
+    "calculator"
+  ]
 }

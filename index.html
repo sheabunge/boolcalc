@@ -53,8 +53,103 @@
 
 			<section class="instructions">
 				<p>Enter a boolean expression such as <code>A ^ (B v C)</code> in the box and click <kbd class="btn-primary">Parse</kbd>.</p>
-				<p>Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>IMPLIES</code> and <code>EQUIV</code>.
-				<br>Also supports most common symbols.</p>
+
+				<p><a ng-click="toggle_ext_info()">See {{ ext_info ? 'less' : 'more' }} information</a></p>
+
+				<div class="brief-instructions" ng-hide="ext_info">
+					<p>Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>IMPLIES</code> and <code>EQUIV</code>.</code>
+				</div>
+
+				<div class="extended-instructions" ng-show="ext_info">
+					<h2>Instructions</h2>
+					<p>Operations and constants are case-insensitive.<br>Variables are case sensitive, can be longer than a single character, can only contain alphanumeric characters, digits and the underscore character, and cannot begin with a digit.</p>
+
+					<section class="highest-ops">
+						<h3>Highest-specificity operations</h3>
+
+						<p>These operations are evaluated first, from left to right.
+							To execute them a particular operation first, surround it with parenthesis <code>( )</code>.</p>
+
+						<table class="table table-bordered">
+							<thead>
+								<tr><th>Operation</th><th>Aliases</th><th>Description</th></tt>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>NOT A</code></td>
+									<td><code>~ ' ! ¬</code></td>
+									<td><code class="value-false">false</code> if <code class="variable">A</code> is <code class="value-true">true</code>, <code class="value-true">true</code> if <code class="variable">A</code> is <code class="value-false">false</code>.</td>
+								</tr>
+								<tr>
+									<td><code>A AND B</code></td>
+									<td><code>∧ ^ &amp; · *</code></td>
+									<td><code class="value-true">true</code> if both <code class="variable">A</code> and <code>B</code> are <code class="value-true">true</code>, <code class="value-false">false</code> if either is <code class="value-false">false</code>.</td>
+								</tr>
+								<tr>
+									<td><code>A EQUIV B</code></td>
+									<td><code>⇔ ≡ ↔ =</code></td>
+									<td><code class="value-true">true</code> if both <code class="variable">A</code> and <code>B</code> are <code class="value-true">true</code> or both are <code class="value-false">false</code>.
+										<code class="value-false">false</code> if one is <code class="value-true">true</code> and the other is <code class="value-false">false</code>.</td>
+								</tr>
+								<tr>
+									<td><code>A IMPLIES B</code></td>
+									<td><code>⇒ → ⊃ &gt;</code></td>
+									<td><code class="value-true">true</code> if <code class="variable">A</code> is <code class="value-false">false</code> or <code class="variable">A</code> is <code class="value-true">true</code> and <code>B</code> is <code class="value-true">true</code>.
+										<code class="value-false">false</code> if <code class="variable">A</code> is <code class="value-true">true</code> and <code>B</code> is <code class="value-false">false</code>.</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section class="lower-ops">
+						<h3>Lower-specificity operations</h3>
+
+						<p>These operations are evaluated after the ones above, from left to right.
+							To execute them first, surround them with parenthesis <code>( )</code>.</p>
+
+						<table class="table table-bordered">
+							<thead>
+								<tr><th>Operation</th><th>Aliases</th><th>Description</th></tt>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>A OR B</code></td>
+									<td><code>∨ v + ∥ |</code></td>
+									<td><code class="value-true">true</code> if <code class="variable">A</code> is <code class="value-true">true</code> or <code>B</code> is <code class="value-true">true</code> or both are <code class="value-true">true</code>,
+										<code class="value-false">false</code> if either both are <code class="value-false">false</code>.</td>
+								</tr>
+								<tr>
+									<td><code>A XOR B</code></td>
+									<td><code>⊻ ⊕</code></td>
+									<td><code class="value-true">true</code> if <code class="variable">A</code> is <code class="value-true">true</code> and <code>B</code> is <code class="value-false">false</code>,
+										<code class="value-true">true</code> if <code class="variable">A</code> is <code class="value-false">false</code> and <code>B</code> is <code class="value-true">true</code>,
+										false if both are <code class="value-true">true</code> or both are <code class="value-false">false</code>.</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section class="constants">
+						<h3>Constants</h3>
+						<table class="table table-bordered">
+							<thead>
+								<tr><th>Constant</th><th>Aliases</th><th>Description</th></tt>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>TRUE</code></td>
+									<td><code>1 T ⊤ true</code></td>
+									<td>Always evaluates to <code class="value-true">true</code>.</td>
+								</tr>
+								<tr>
+									<td><code>FALSE</code></td>
+									<td><code>0 F ⊥ false</code></td>
+									<td>Always evaluates to <code class="value-false">false</code>.</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+				</div>
 			</section>
 
 		</main>

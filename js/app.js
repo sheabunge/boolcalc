@@ -76,6 +76,11 @@ app.controller('Parser', ['$scope', function ( $scope ) {
 	$scope.exp = '';
 	$scope.table = [];
 	$scope.error = null;
+	$scope.ext_info = false;
+
+	$scope.toggle_ext_info = () => {
+		$scope.ext_info = ! $scope.ext_info;
+	};
 
 	let parse_exp = () => {
 		$scope.table = [];

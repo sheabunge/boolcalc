@@ -44,6 +44,20 @@ th, td {
 .instructions {
 	text-align: center;
 	margin-top: 1em;
+
+	p, table {
+		max-width: 800px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	table {
+		margin: 10px auto;
+	}
+
+	td:last-child, th:last-child {
+		text-align: left;
+	}
 }
 
 .value-true {

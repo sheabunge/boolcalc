@@ -114,3 +114,7 @@ form {
 	color: #777;
 	font-size: small;
 }
+
+a[ng-click] {
+	cursor: pointer;
+}

@@ -62,10 +62,29 @@ th, td {
 
 .value-true {
 	background-color: $pale-green-bg;
+
+	code& {
+		color: #3c763d;
+		border-color: #d6e9c6;
+	}
 }
 
 .value-false {
 	background-color: $pale-red-bg;
+
+	code& {
+		color: #a94442;
+		border-color: #ebccd1;
+	}
+}
+
+.variable, .expression {
+	background-color: #fcf8e3;
+
+	code& {
+		color: #8a6d3b;
+		border-color: #faebcc;
+	}
 }
 
 .parse-error {
@@ -78,7 +97,7 @@ th, td {
 }
 
 form {
-	max-width: 300px;
+	max-width: 350px;
 	margin: 0 auto 2em;
 }
 

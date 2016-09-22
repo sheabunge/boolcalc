@@ -24,6 +24,17 @@ export class BinaryNode extends Node {
 	toString() {
 		return 'Node(' + this.left + ', ' + this.right + ')'
 	}
+
+	static wrapNode(node) {
+		let s = node.toString();
+
+		// ensure that OR nodes have brackets to maintain specificity
+		if (node instanceof OrNode || node instanceof XOrNode) {
+			s = '(' + s + ')';
+		}
+
+		return s;
+	}
 }
 
 /**
@@ -44,18 +55,7 @@ export class AndNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		let left = this.left.toString();
-		let right = this.right.toString();
-
-		// ensure that OR nodes have brackets to maintain specificity
-		if (this.left instanceof OrNode) {
-			left = '(' + left + ')';
-		}
-		if (this.right instanceof OrNode) {
-			right = '(' + right + ')';
-		}
-
-		return left + ' ∧ ' + right;
+		return BinaryNode.wrapNode(this.left) + ' ∧ ' + BinaryNode.wrapNode(this.right);
 	}
 }
 
@@ -121,7 +121,7 @@ export class EquivNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		return this.left + ' ≡ ' + this.right;
+		return BinaryNode.wrapNode(this.left) + ' ≡ ' + BinaryNode.wrapNode(this.right);
 	}
 }
 
@@ -143,6 +143,6 @@ export class ImpliesNode extends BinaryNode {
 	 * @returns {string}
 	 */
 	toString() {
-		return this.left + ' → ' + this.right;
+		return BinaryNode.wrapNode(this.left) + ' → ' + BinaryNode.wrapNode(this.right);
 	}
 }

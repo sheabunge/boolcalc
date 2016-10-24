@@ -68,10 +68,19 @@ th, td {
 	}
 }
 
+code, samp {
+
+	&, &.value-false, &.value-true {
+		padding: 2px 4px;
+		font-size: 90%;
+		border-radius: 4px;
+	}
+}
+
 .value-true {
 	background-color: $pale-green-bg;
 
-	code& {
+	code&, samp& {
 		color: #3c763d;
 		border-color: #d6e9c6;
 	}
@@ -80,18 +89,9 @@ th, td {
 .value-false {
 	background-color: $pale-red-bg;
 
-	code& {
+	code&, samp& {
 		color: #a94442;
 		border-color: #ebccd1;
-	}
-}
-
-.variable, .expression {
-	background-color: #fcf8e3;
-
-	code& {
-		color: #8a6d3b;
-		border-color: #faebcc;
 	}
 }
 

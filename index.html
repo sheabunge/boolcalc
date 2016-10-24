@@ -62,17 +62,19 @@
 
 				<div class="extended-instructions" ng-show="ext_info">
 					<h2>Instructions</h2>
-					<p>Operations and constants are case-insensitive.<br>Variables are case sensitive, can be longer than a single character, can only contain alphanumeric characters, digits and the underscore character, and cannot begin with a digit.</p>
+					<p>Operations and constants are case-insensitive.</p>
+					<p>Variables are case sensitive, can be longer than a single character, can only contain alphanumeric characters, digits and the underscore character, and cannot begin with a digit.</p>
 
-					<section class="highest-ops">
-						<h3>Highest precedence operations</h3>
+					<section class="operations">
+						<h3>Operations</h3>
 
-						<p>These operations are evaluated first, from left to right.
-							To execute them a particular operation first, surround it with parenthesis <code>( )</code>.</p>
+						<p>Operations are executed in order of precedence, from higher to lower.
+							Operations with the same precedence are executed from left to right.
+							To execute a particular operation first, surround it with parenthesis <code>( )</code>.</p>
 
 						<table class="table table-bordered">
 							<thead>
-								<tr><th>Operation</th><th>Aliases</th><th>Description</th></tr>
+								<tr></th><th>Operation</th><th>Aliases</th><th>Description</th><th>Precedence</th></tr>
 							</thead>
 							<tbody>
 								<tr>
@@ -80,45 +82,35 @@
 									<td><code>~ ' ! ¬</code></td>
 									<td><code class="value-false">false</code> if <code class="variable">A</code> is true;
 										<code class="value-true">true</code> if <code class="variable">A</code> is false.</td>
+									<td>first</td>
 								</tr>
 								<tr>
 									<td><code>A AND B</code></td>
 									<td><code>∧ ^ &amp; · *</code></td>
 									<td><code class="value-true">true</code> if both <code class="variable">A</code> and <code class="variable">B</code> are true;
 										<code class="value-false">false</code> if either or both are false.</td>
+									<td>second</td>
 								</tr>
 								<tr>
 									<td><code>A EQUIV B</code></td>
 									<td><code>⇔ ≡ ↔ =</code></td>
 									<td><code class="value-true">true</code> if both <code class="variable">A</code> and <code class="variable">B</code> are true or both are false;
 										<code class="value-false">false</code> if one is true and the other is false.</td>
+									<td>second</td>
 								</tr>
 								<tr>
 									<td><code>A IMPLIES B</code></td>
 									<td><code>⇒ → ⊃ &gt;</code></td>
 									<td><code class="value-true">true</code> if <code class="variable">A</code> is false, or <code class="variable">A</code> is true and <code class="variable">B</code> is true;
 										<code class="value-false">false</code> if <code class="variable">A</code> is true and <code class="variable">B</code> is false.</td>
+									<td>second</td>
 								</tr>
-							</tbody>
-						</table>
-					</section>
-
-					<section class="lower-ops">
-						<h3>Lower precedence operations</h3>
-
-						<p>These operations are evaluated after the ones above, from left to right.
-							To execute them first, surround them with parenthesis <code>( )</code>.</p>
-
-						<table class="table table-bordered">
-							<thead>
-								<tr><th>Operation</th><th>Aliases</th><th>Description</th></tr>
-							</thead>
-							<tbody>
 								<tr>
 									<td><code>A OR B</code></td>
 									<td><code>∨ v + ∥ |</code></td>
 									<td><code class="value-true">true</code> if <code class="variable">A</code> is true, <code class="variable">B</code> is true, or both are true;
 										<code class="value-false">false</code> if either or both are false.</td>
+									<td>third</td>
 								</tr>
 								<tr>
 									<td><code>A XOR B</code></td>
@@ -126,6 +118,7 @@
 									<td><code class="value-true">true</code> if <code class="variable">A</code> is true and <code class="variable">B</code> is false;
 										<code class="value-true">true</code> if <code class="variable">A</code> is false and <code class="variable">B</code> is true;
 										<code class="value-false">false</code> if both are true or both are false.</td>
+									<td>third</td>
 								</tr>
 							</tbody>
 						</table>

@@ -22,6 +22,10 @@ label {
 	width: 100%;
 }
 
+p {
+	font-size: 15px;
+}
+
 #exp {
 	height: 50px;
 	line-height: 3rem;
@@ -46,16 +50,20 @@ th, td {
 	margin-top: 1em;
 
 	p, table {
-		max-width: 800px;
 		margin-left: auto;
 		margin-right: auto;
 	}
 
-	table {
-		margin: 10px auto;
+	p {
+		max-width: 800px;
 	}
 
-	td:last-child, th:last-child {
+	table {
+		margin: 10px auto;
+		width: auto;
+	}
+
+	td:nth-child(3) {
 		text-align: left;
 	}
 }

@@ -66,6 +66,11 @@ th, td {
 	td:nth-child(3) {
 		text-align: left;
 	}
+
+	td:nth-child(2) code {
+		white-space: nowrap;
+	}
+
 }
 
 code, samp {

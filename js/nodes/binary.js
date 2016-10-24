@@ -28,7 +28,7 @@ export class BinaryNode extends Node {
 	static wrapNode(node) {
 		let s = node.toString();
 
-		// ensure that OR nodes have brackets to maintain specificity
+		// ensure that OR nodes have brackets to maintain precedence
 		if (node instanceof OrNode || node instanceof XOrNode) {
 			s = '(' + s + ')';
 		}

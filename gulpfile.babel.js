@@ -1,6 +1,6 @@
+'use strict';
 
 import gulp from 'gulp';
-import run from 'run-sequence';
 import sourcemaps from 'gulp-sourcemaps';
 import clean from 'gulp-clean';
 
@@ -32,7 +32,7 @@ gulp.task('css', () => {
 		.pipe(postcss(processors))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
-		.pipe(browsersync.stream({ match: '**/*.css' }))
+		.pipe(browsersync.stream({match: '**/*.css'}))
 });
 
 gulp.task('test-js', () => {
@@ -57,7 +57,7 @@ gulp.task('test-js', () => {
 		.pipe(eslint.failAfterError())
 });
 
-gulp.task('js', ['test-js'], () => {
+gulp.task('js', gulp.series('test-js', () => {
 
 	const b = browserify({
 		debug: true,
@@ -65,7 +65,7 @@ gulp.task('js', ['test-js'], () => {
 	});
 
 	b.transform('babelify', {
-		presets: ['es2015'], sourceMaps: true
+		presets: ['@babel/preset-env'], sourceMaps: true
 	});
 
 	return b.bundle()
@@ -75,24 +75,8 @@ gulp.task('js', ['test-js'], () => {
 		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
-		.pipe(browsersync.stream({ match: '**/*.js' }))
-});
-
-gulp.task('watch', ['default'], () => {
-	gulp.watch('css/**/*.css', ['css']);
-	gulp.watch('js/**/*.js', ['js']);
-});
-
-gulp.task('browsersync', ['watch'], () => {
-
-	browsersync.init({
-		server: {
-			baseDir: './'
-		}
-	});
-
-	gulp.watch('*.html').on('change', browsersync.reload);
-});
+		.pipe(browsersync.stream({match: '**/*.js'}))
+}));
 
 gulp.task('clean', () => {
 	return gulp.src(dest, {read: false})
@@ -104,8 +88,24 @@ gulp.task('bootstrap', () => {
 		.pipe(gulp.dest(dest));
 });
 
-gulp.task('default', () => {
-	run('clean', ['bootstrap', 'css', 'js'])
-});
+gulp.task('test', gulp.parallel('test-js'));
 
-gulp.task('test', ['eslint']);
+gulp.task('default', gulp.series('clean', gulp.parallel('bootstrap', 'css', 'js')));
+
+gulp.task('watch', gulp.series('default', (done) => {
+	gulp.watch('css/**/*.css', gulp.series('css'));
+	gulp.watch('js/**/*.js', gulp.series('js'));
+	done();
+}));
+
+gulp.task('browsersync', gulp.series('watch', (done) => {
+
+	browsersync.init({
+		server: {
+			baseDir: './'
+		}
+	});
+
+	gulp.watch('*.html').on('change', browsersync.reload);
+	done();
+}));

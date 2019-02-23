@@ -39,7 +39,7 @@
 			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
 				<thead>
 				<tr>
-					<th ng-repeat="var in parser.get_vars()" class="variable">{{ '' + var }}</th>
+					<th ng-repeat="variable in parser.get_vars()" class="variable">{{ '' + variable }}</th>
 					<th ng-repeat="node in nodes">{{ '' + node }}</th>
 				</tr>
 				</thead>
@@ -73,7 +73,7 @@
 
 						<table class="table table-bordered">
 							<thead>
-								<tr></th><th>Operation</th><th>Aliases</th><th>Description</th><th>Precedence</th></tr>
+								<tr><th>Operation</th><th>Aliases</th><th>Description</th><th>Precedence</th></tr>
 							</thead>
 							<tbody>
 								<tr>
@@ -99,9 +99,16 @@
 								</tr>
 								<tr>
 									<td><code>A IMPLIES B</code></td>
-									<td><code>⇒ → ⊃ &gt;</code></td>
+									<td><code>⇒ → ⊂ &lt;</code></td>
 									<td><samp class="value-true">true</samp> if <var>A</var> is false, or <var>A</var> is true and <var>B</var> is true;
 										<samp class="value-false">false</samp> if <var>A</var> is true and <var>B</var> is false.</td>
+									<td>second</td>
+								</tr>
+								<tr>
+									<td><code>A PROVIDED B</code></td>
+									<td><code>⇐ ← ⊃ &gt;</code></td>
+									<td><samp class="value-true">true</samp> if <var>A</var> is true and <var>B</var> is true, or <var>B</var> is false;
+										<samp class="value-false">false</samp> if <var>A</var> is false and <var>B</var> is true.</td>
 									<td>second</td>
 								</tr>
 								<tr>

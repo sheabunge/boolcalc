@@ -11,7 +11,7 @@ import {ValueNode, VariableNode} from '../nodes/value';
  * Parses a boolean expression
  *
  * <or>  ::= <and> ( ("∨" | "⊻") <or> )?
- * <and> ::= "~"? <exp> ( ("∧" | "≡" | "→")  <or> )?
+ * <and> ::= "~"? <exp> ( ("∧" | "≡" | "⇒" | "⇐")  <or> )?
  * <exp> ::= [a-zA-Z_][a-zA-Z0-9_]* | 0 | 1
  * <exp> ::= "(" <or> ")"
  */
@@ -103,7 +103,7 @@ export class BooleanParser extends Parser {
 	/**
 	 * Parse an AND node
 	 *
-	 * <and> ::= "~"? <exp> ( ("∧" | "≡" | "→")  <and> )?
+	 * <and> ::= "~"? <exp> ( ("∧" | "≡" | "⇒" | "⇐")  <or> )?
 	 *
 	 * @returns {Node}
 	 * @private

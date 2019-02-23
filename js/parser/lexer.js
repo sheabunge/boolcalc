@@ -57,7 +57,7 @@ export const patterns = new Map([
 	[token_types.OP_XOR, /^(?:[⊻⊕]|XOR\b)/i],
 	[token_types.OP_EQUIV, /^(?:[⇔≡↔=]|EQUIV\b)/i],
 	[token_types.OP_IMPLIES, /^(?:[⇒→⊃>]|IMPLIES\b)/i],
-	[token_types.OP_PROVIDED, /^(?:[⇒→⊃>]|IMPLIES\b)/i],
+	[token_types.OP_PROVIDED, /^(?:[⇐←⊃<]|PROVIDED\b)/i],
 	[token_types.CONST_TRUE, /^(?:[1⊤]|T\b|TRUE\b)/i],
 	[token_types.CONST_FALSE, /^(?:[0⊥]|F\b|FALSE\b)/i],
 	[token_types.VAR, /^[A-Za-z_]\w*/],

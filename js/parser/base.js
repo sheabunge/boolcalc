@@ -1,4 +1,3 @@
-
 import {InvalidInputError} from './exceptions';
 
 /**
@@ -70,7 +69,7 @@ export class Parser {
 
 		let node = this._parse();
 
-		if (! this.end()) {
+		if (!this.end()) {
 			console.log('tokens: ' + this.tokens);
 			console.log('pointer: ' + this.current);
 			throw new InvalidInputError('Expression contains malformed syntax');
@@ -84,6 +83,7 @@ export class Parser {
 	 *
 	 * @abstract
 	 * @private
+	 * @returns {Node}
 	 */
 	_parse() {
 		throw new TypeError('_parse() method not implemented');

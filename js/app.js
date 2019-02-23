@@ -37,7 +37,7 @@ let truth_table = (vars, nodes) => {
 		let row = [];
 
 		for (let node of nodes) {
-			row.push(node.eval() ? '1' : '0');
+			row.push(node.evalValue() ? '1' : '0');
 		}
 
 		table.push(row);
@@ -59,7 +59,7 @@ let truth_table = (vars, nodes) => {
 
 		// For each node, evaluate it with the new variable inputs
 		for (let node of nodes) {
-			inputs.push(node.eval() ? '1' : '0');
+			inputs.push(node.evalValue() ? '1' : '0');
 		}
 
 		// Add the row to the table

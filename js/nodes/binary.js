@@ -1,4 +1,3 @@
-
 import {Node} from './base';
 
 /**
@@ -35,6 +34,15 @@ export class BinaryNode extends Node {
 
 		return s;
 	}
+
+	/**
+	 * Evaluate the node
+	 * @abstract
+	 * @returns {*}
+	 */
+	evalValue() {
+		return super.evalValue();
+	}
 }
 
 /**
@@ -46,8 +54,8 @@ export class AndNode extends BinaryNode {
 	 * Evaluate the node
 	 * @returns {boolean} The result of (L ∧ R)
 	 */
-	eval() {
-		return this.left.eval() && this.right.eval();
+	evalValue() {
+		return this.left.evalValue() && this.right.evalValue();
 	}
 
 	/**
@@ -68,8 +76,8 @@ export class OrNode extends BinaryNode {
 	 * Evaluates the node
 	 * @returns {boolean} The result of (L ∨ R)
 	 */
-	eval() {
-		return this.left.eval() || this.right.eval();
+	evalValue() {
+		return this.left.evalValue() || this.right.evalValue();
 	}
 
 	/**
@@ -90,8 +98,8 @@ export class XOrNode extends BinaryNode {
 	 * Evaluates the node
 	 * @returns {boolean} The result of (L ⊻ R)
 	 */
-	eval() {
-		return this.left.eval() ? ! this.right.eval() : this.right.eval();
+	evalValue() {
+		return this.left.evalValue() ? !this.right.evalValue() : this.right.evalValue();
 	}
 
 	/**
@@ -112,8 +120,8 @@ export class EquivNode extends BinaryNode {
 	 * Evaluates the node
 	 * @returns {boolean} The result of (L ≡ R)
 	 */
-	eval() {
-		return this.left.eval() === this.right.eval();
+	evalValue() {
+		return this.left.evalValue() === this.right.evalValue();
 	}
 
 	/**
@@ -134,8 +142,8 @@ export class ImpliesNode extends BinaryNode {
 	 * Evaluates the node
 	 * @returns {boolean} The result of (L → R)
 	 */
-	eval() {
-		return this.left.eval() ? this.right.eval() : true;
+	evalValue() {
+		return this.left.evalValue() ? this.right.evalValue() : true;
 	}
 
 	/**
@@ -144,5 +152,29 @@ export class ImpliesNode extends BinaryNode {
 	 */
 	toString() {
 		return BinaryNode.wrapNode(this.left) + ' → ' + BinaryNode.wrapNode(this.right);
+	}
+}
+
+/**
+ * Represents a provided operation node
+ */
+export class ProvidedNode extends BinaryNode {
+
+	/**
+	 * Evaluates the node
+	 * @returns {boolean} The result of (L ← R)
+	 */
+	evalValue() {
+		const a = this.left.evalValue();
+		const b = this.right.evalValue();
+		return (a && b) || !b;
+	}
+
+	/**
+	 * Returns a string representation of the node
+	 * @returns {string}
+	 */
+	toString() {
+		return BinaryNode.wrapNode(this.left) + ' ← ' + BinaryNode.wrapNode(this.right);
 	}
 }

@@ -1,4 +1,3 @@
-
 import {Node} from './base';
 import {ParseError} from '../parser/exceptions';
 
@@ -41,8 +40,8 @@ export class ValueNode extends Node {
 	 * @returns {boolean} Value of the node
 	 *
 	 */
-	eval() {
-		if (this.value === null) {
+	evalValue() {
+		if (null === this.value) {
 			throw new ParseError('Value of node cannot be null')
 		}
 

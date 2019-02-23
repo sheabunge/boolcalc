@@ -1,9 +1,8 @@
-
 import {Parser} from './base';
 import {Lexer, token_types} from './lexer';
 import {InvalidInputError} from './exceptions';
 
-import {BinaryNode, AndNode, OrNode, XOrNode, EquivNode, ImpliesNode} from '../nodes/binary';
+import {BinaryNode, AndNode, OrNode, XOrNode, EquivNode, ImpliesNode, ProvidedNode} from '../nodes/binary';
 import {UnaryNode, NotNode} from '../nodes/unary';
 import {ValueNode, VariableNode} from '../nodes/value';
 
@@ -122,7 +121,7 @@ export class BooleanParser extends Parser {
 		// Store the value of the next node so we don't need to keep calling this
 		let peek = this.peek();
 
-		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV || peek === token_types.OP_IMPLIES) {
+		if (peek === token_types.OP_AND || peek === token_types.OP_EQUIV || peek === token_types.OP_IMPLIES || peek === token_types.OP_PROVIDED) {
 			this.next();
 			let term = this._parse_and();
 
@@ -131,6 +130,9 @@ export class BooleanParser extends Parser {
 
 			} else if (peek === token_types.OP_IMPLIES) {
 				node = new ImpliesNode(term, node);
+
+			} else if (peek === token_types.OP_PROVIDED) {
+				node = new ProvidedNode(term, node);
 
 			} else {
 				node = new AndNode(term, node);

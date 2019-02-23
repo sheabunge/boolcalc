@@ -9,8 +9,8 @@ export class Node {
 	 * @abstract
 	 * @returns {*}
 	 */
-	eval() {
-		throw new TypeError('eval() method not implemented');
+	evalValue() {
+		throw new TypeError('evalValue() method not implemented');
 	}
 
 	/**

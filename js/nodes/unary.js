@@ -31,8 +31,8 @@ export class NotNode extends UnaryNode {
 	 * Evaluates the node
 	 * @returns {boolean} The result of ~N
 	 */
-	eval() {
-		return ! this.child.eval();
+	evalValue() {
+		return ! this.child.evalValue();
 	}
 
 	/**

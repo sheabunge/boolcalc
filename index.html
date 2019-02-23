@@ -13,151 +13,178 @@
 	<script src="dist/app.js"></script>
 </head>
 <body ng-app="app">
-	<div class="container">
+<div class="container">
 
-		<div class="header clearfix">
-			<h3 class="text-muted">Boolean Algebra Calculator</h3>
-		</div>
-
-		<main ng-controller="Parser">
-
-			<form ng-submit="parse()">
-
-				<div class="form-group">
-					<label for="exp">Expression</label>
-					<input ng-model="exp" type="text" id="exp" class="form-control" autocomplete="off">
-				</div>
-
-				<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
-			</form>
-
-			<aside ng-if="error" class="parse-error alert-danger">
-				<p><strong>An error occurred when parsing the expression:</strong></p>
-				<p>{{ error }}</p>
-			</aside>
-
-			<table class="table table-hover table-bordered truth-table" ng-if="table.length">
-				<thead>
-				<tr>
-					<th ng-repeat="variable in parser.get_vars()" class="variable">{{ '' + variable }}</th>
-					<th ng-repeat="node in nodes">{{ '' + node }}</th>
-				</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="row in table">
-						<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' }}">{{ cell }}</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<section class="instructions">
-				<p>Enter a boolean expression such as <code>A ^ (B v C)</code> in the box and click <kbd class="btn-primary">Parse</kbd>.</p>
-
-				<p><a ng-click="toggle_ext_info()">See {{ ext_info ? 'less' : 'more' }} information</a></p>
-
-				<div class="brief-instructions" ng-hide="ext_info">
-					<p>Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>IMPLIES</code> and <code>EQUIV</code>.</code>
-				</div>
-
-				<div class="extended-instructions" ng-show="ext_info">
-					<h2>Instructions</h2>
-					<p>Operations and constants are case-insensitive.</p>
-					<p>Variables are case sensitive, can be longer than a single character, can only contain alphanumeric characters, digits and the underscore character, and cannot begin with a digit.</p>
-
-					<section class="operations">
-						<h3>Operations</h3>
-
-						<p>Operations are executed in order of precedence, from higher to lower.
-							Operations with the same precedence are executed from left to right.
-							To execute a particular operation first, surround it with parenthesis <code>( )</code>.</p>
-
-						<table class="table table-bordered">
-							<thead>
-								<tr><th>Operation</th><th>Aliases</th><th>Description</th><th>Precedence</th></tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><code>NOT A</code></td>
-									<td><code>~ ' ! ¬</code></td>
-									<td><samp class="value-false">false</samp> if <var>A</var> is true;
-										<samp class="value-true">true</samp> if <var>A</var> is false.</td>
-									<td>first</td>
-								</tr>
-								<tr>
-									<td><code>A AND B</code></td>
-									<td><code>∧ ^ &amp; · *</code></td>
-									<td><samp class="value-true">true</samp> if both <var>A</var> and <var>B</var> are true;
-										<samp class="value-false">false</samp> if either or both are false.</td>
-									<td>second</td>
-								</tr>
-								<tr>
-									<td><code>A EQUIV B</code></td>
-									<td><code>⇔ ≡ ↔ =</code></td>
-									<td><samp class="value-true">true</samp> if both <var>A</var> and <var>B</var> are true or both are false;
-										<samp class="value-false">false</samp> if one is true and the other is false.</td>
-									<td>second</td>
-								</tr>
-								<tr>
-									<td><code>A IMPLIES B</code></td>
-									<td><code>⇒ → ⊂ &lt;</code></td>
-									<td><samp class="value-true">true</samp> if <var>A</var> is false, or <var>A</var> is true and <var>B</var> is true;
-										<samp class="value-false">false</samp> if <var>A</var> is true and <var>B</var> is false.</td>
-									<td>second</td>
-								</tr>
-								<tr>
-									<td><code>A PROVIDED B</code></td>
-									<td><code>⇐ ← ⊃ &gt</code></td>
-									<td><samp class="value-true">true</samp> if <var>A</var> is true and <var>B</var> is true, or <var>B</var> is false;
-										<samp class="value-false">false</samp> if <var>A</var> is false and <var>B</var> is true.</td>
-									<td>second</td>
-								</tr>
-								<tr>
-									<td><code>A OR B</code></td>
-									<td><code>∨ v + ∥ |</code></td>
-									<td><samp class="value-true">true</samp> if <var>A</var> is true, <var>B</var> is true, or both are true;
-										<samp class="value-false">false</samp> if either or both are false.</td>
-									<td>third</td>
-								</tr>
-								<tr>
-									<td><code>A XOR B</code></td>
-									<td><code>⊻ ⊕</code></td>
-									<td><samp class="value-true">true</samp> if <var>A</var> is true and <var>B</var> is false;
-										<samp class="value-true">true</samp> if <var>A</var> is false and <var>B</var> is true;
-										<samp class="value-false">false</samp> if both are true or both are false.</td>
-									<td>third</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
-
-					<section class="constants">
-						<h3>Constants</h3>
-						<table class="table table-bordered">
-							<thead>
-								<tr><th>Constant</th><th>Aliases</th><th>Description</th></tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><code>TRUE</code></td>
-									<td><code>1 T ⊤ true</code></td>
-									<td>Always evaluates to <samp class="value-true">true</samp>.</td>
-								</tr>
-								<tr>
-									<td><code>FALSE</code></td>
-									<td><code>0 F ⊥ false</code></td>
-									<td>Always evaluates to <samp class="value-false">false</samp>.</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
-				</div>
-			</section>
-
-		</main>
+	<div class="header clearfix">
+		<h3 class="text-muted">Boolean Algebra Calculator</h3>
 	</div>
 
-	<footer class="footer">
-		Shea Bunge, 2016 | <a href="https://github.com/sheabunge/boolcalc">View source on GitHub</a>
-	</footer>
+	<main ng-controller="Parser">
+
+		<form ng-submit="parse()">
+
+			<div class="form-group">
+				<label for="exp">Expression</label>
+				<input ng-model="exp" type="text" id="exp" class="form-control" autocomplete="off">
+			</div>
+
+			<button type="submit" class="btn btn-primary btn-block btn-lg">Parse</button>
+		</form>
+
+		<aside ng-if="error" class="parse-error alert-danger">
+			<p><strong>An error occurred when parsing the expression:</strong></p>
+			<p>{{ error }}</p>
+		</aside>
+
+		<table class="table table-hover table-bordered truth-table" ng-if="table.length">
+			<thead>
+			<tr>
+				<th ng-repeat="variable in parser.get_vars()" class="variable">{{ '' + variable }}</th>
+				<th ng-repeat="node in nodes">{{ '' + node }}</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in table">
+				<td ng-repeat="cell in row track by $index" class="value-{{ cell === '1' }}">{{ cell }}</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<section class="instructions">
+			<p>Enter a boolean expression such as <code>A ^ (B v C)</code> in the box and click <kbd
+				class="btn-primary">Parse</kbd>.</p>
+
+			<p><button ng-click="toggle_ext_info()" class="btn btn-sm btn-outline-secondary">
+				See {{ ext_info ? 'less' : 'more' }} information
+			</button></p>
+
+			<div class="brief-instructions" ng-hide="ext_info">
+				<p>Supported operations are <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>,
+					<code>IMPLIES</code>, <code>PROVIDED</code> and <code>EQUIV</code>.</p>
+			</div>
+
+			<div class="extended-instructions" ng-show="ext_info">
+				<h2>Instructions</h2>
+				<p>Operations and constants are case-insensitive.</p>
+				<p>Variables are case sensitive, can be longer than a single character, can only contain alphanumeric
+					characters, digits and the underscore character, and cannot begin with a digit.</p>
+
+				<section class="operations">
+					<h3>Operations</h3>
+
+					<p>Operations are executed in order of precedence, from higher to lower.
+						Operations with the same precedence are executed from left to right.
+						To execute a particular operation first, surround it with parenthesis <code>( )</code>.</p>
+
+					<table class="table table-bordered">
+						<thead>
+						<tr>
+							<th>Operation</th>
+							<th>Aliases</th>
+							<th>Description</th>
+							<th>Precedence</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><code>NOT A</code></td>
+							<td><code>~ ' ! ¬</code></td>
+							<td><samp class="value-false">false</samp> if <var>A</var> is true;
+								<samp class="value-true">true</samp> if <var>A</var> is false.
+							</td>
+							<td>first</td>
+						</tr>
+						<tr>
+							<td><code>A AND B</code></td>
+							<td><code>∧ ^ &amp; · *</code></td>
+							<td><samp class="value-true">true</samp> if both <var>A</var> and <var>B</var> are true;
+								<samp class="value-false">false</samp> if either or both are false.
+							</td>
+							<td>second</td>
+						</tr>
+						<tr>
+							<td><code>A EQUIV B</code></td>
+							<td><code>⇔ ≡ ↔ =</code></td>
+							<td><samp class="value-true">true</samp> if both <var>A</var> and <var>B</var> are true or
+								both are false;
+								<samp class="value-false">false</samp> if one is true and the other is false.
+							</td>
+							<td>second</td>
+						</tr>
+						<tr>
+							<td><code>A IMPLIES B</code></td>
+							<td><code>⇒ → ⊂ &lt;</code></td>
+							<td><samp class="value-true">true</samp> if <var>A</var> is false, or <var>A</var> is true
+								and <var>B</var> is true;
+								<samp class="value-false">false</samp> if <var>A</var> is true and <var>B</var> is
+								false.
+							</td>
+							<td>second</td>
+						</tr>
+						<tr>
+							<td><code>A PROVIDED B</code></td>
+							<td><code>⇐ ← ⊃ &gt</code></td>
+							<td><samp class="value-true">true</samp> if <var>A</var> is true and <var>B</var> is true,
+								or <var>B</var> is false;
+								<samp class="value-false">false</samp> if <var>A</var> is false and <var>B</var> is
+								true.
+							</td>
+							<td>second</td>
+						</tr>
+						<tr>
+							<td><code>A OR B</code></td>
+							<td><code>∨ v + ∥ |</code></td>
+							<td><samp class="value-true">true</samp> if <var>A</var> is true, <var>B</var> is true, or
+								both are true;
+								<samp class="value-false">false</samp> if either or both are false.
+							</td>
+							<td>third</td>
+						</tr>
+						<tr>
+							<td><code>A XOR B</code></td>
+							<td><code>⊻ ⊕</code></td>
+							<td><samp class="value-true">true</samp> if <var>A</var> is true and <var>B</var> is false;
+								<samp class="value-true">true</samp> if <var>A</var> is false and <var>B</var> is true;
+								<samp class="value-false">false</samp> if both are true or both are false.
+							</td>
+							<td>third</td>
+						</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section class="constants">
+					<h3>Constants</h3>
+					<table class="table table-bordered">
+						<thead>
+						<tr>
+							<th>Constant</th>
+							<th>Aliases</th>
+							<th>Description</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><code>TRUE</code></td>
+							<td><code>1 T ⊤ true</code></td>
+							<td>Always evaluates to <samp class="value-true">true</samp>.</td>
+						</tr>
+						<tr>
+							<td><code>FALSE</code></td>
+							<td><code>0 F ⊥ false</code></td>
+							<td>Always evaluates to <samp class="value-false">false</samp>.</td>
+						</tr>
+						</tbody>
+					</table>
+				</section>
+			</div>
+		</section>
+
+	</main>
+</div>
+
+<footer class="footer">
+	Shea Bunge, 2016 - 2019 | <a href="https://github.com/sheabunge/boolcalc">View source on GitHub</a>
+</footer>
 </body>
 </html>

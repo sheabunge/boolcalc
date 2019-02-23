@@ -3,6 +3,7 @@
 import gulp from 'gulp';
 import sourcemaps from 'gulp-sourcemaps';
 import clean from 'gulp-clean';
+import rename from 'gulp-rename';
 
 import postcss from 'gulp-postcss';
 import precss from 'precss';
@@ -27,7 +28,8 @@ gulp.task('css', () => {
 		cssnano()
 	];
 
-	return gulp.src('css/app.css')
+	return gulp.src('css/app.scss')
+		.pipe(rename({extname: '.css'}))
 		.pipe(sourcemaps.init())
 		.pipe(postcss(processors))
 		.pipe(sourcemaps.write('.'))
@@ -93,7 +95,7 @@ gulp.task('test', gulp.parallel('test-js'));
 gulp.task('default', gulp.series('clean', gulp.parallel('bootstrap', 'css', 'js')));
 
 gulp.task('watch', gulp.series('default', (done) => {
-	gulp.watch('css/**/*.css', gulp.series('css'));
+	gulp.watch('css/**/*.scss', gulp.series('css'));
 	gulp.watch('js/**/*.js', gulp.series('js'));
 	done();
 }));

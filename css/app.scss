@@ -131,3 +131,10 @@ form {
 a[ng-click] {
 	cursor: pointer;
 }
+
+.operations {
+	td:first-child {
+		white-space: nowrap;
+		text-align: left;
+	}
+}

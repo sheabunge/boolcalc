@@ -63,7 +63,8 @@ th, td {
 		width: auto;
 	}
 
-	td:nth-child(3) {
+	th:nth-child(3), td:nth-child(3),
+	th:nth-child(4), td:nth-child(4) {
 		text-align: left;
 	}
 
@@ -74,11 +75,14 @@ th, td {
 }
 
 code, samp {
+	padding: 2px 4px;
+	border-radius: 4px;
+}
 
-	&, &.value-false, &.value-true {
-		padding: 2px 4px;
-		font-size: 90%;
-		border-radius: 4px;
+samp {
+	&.value-false, &.value-true {
+		font-size: 80%;
+		vertical-align: text-top;
 	}
 }
 
@@ -133,8 +137,13 @@ a[ng-click] {
 }
 
 .operations {
-	td:first-child {
+	th:first-child, td:first-child {
 		white-space: nowrap;
 		text-align: left;
 	}
+}
+
+var {
+	font-style: normal;
+	font-weight: bold;
 }

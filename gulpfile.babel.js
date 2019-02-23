@@ -16,7 +16,7 @@ import buffer from 'vinyl-buffer';
 import uglify from 'gulp-uglify';
 import eslint from 'gulp-eslint';
 
-let browsersync = require('browser-sync').create();
+const browsersync = require('browser-sync').create();
 
 const dest = 'dist';
 

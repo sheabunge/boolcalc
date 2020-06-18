@@ -39,7 +39,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "bootstrap": "^4.4.1"
   },
   "scripts": {

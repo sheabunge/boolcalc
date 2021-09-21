@@ -19,28 +19,28 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/register": "^7.8.3",
-    "autoprefixer": "^9.7.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/register": "^7.15.3",
+    "autoprefixer": "^10.3.4",
     "babelify": "^10.0.0",
-    "browser-sync": "^2.26.7",
-    "browserify": "^16.5.0",
-    "cssnano": "^4.1.10",
+    "browser-sync": "^2.27.5",
+    "browserify": "^17.0.0",
+    "cssnano": "^5.0.8",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-eslint": "^6.0.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
     "precss": "^4.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "angular": "^1.8.0",
-    "bootstrap": "^4.4.1"
+    "angular": "^1.8.2",
+    "bootstrap": "^4.6.0"
   },
   "scripts": {
     "test": "gulp test"
